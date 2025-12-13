@@ -2,7 +2,18 @@
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
+.idea/
+*.iml
+*.iws
+*.ipr
 .kotlin
+target/
+build/
+*.class
+*.log
+*.jar
+*.war
+*.ear
 
 ### Eclipse ###
 .apt_generated
