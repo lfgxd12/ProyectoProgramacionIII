@@ -4,6 +4,8 @@ public class Equipo {
     private String nombre;
     private String ciudad;
     private String codigo;
+    private String estadio;
+    private String annioFundacion;
     private int pj;  // Partidos jugados
     private int g;   // Ganados
     private int e;   // Empatados
@@ -66,6 +68,7 @@ public class Equipo {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
 
     public String getCiudad() {
         return ciudad;
