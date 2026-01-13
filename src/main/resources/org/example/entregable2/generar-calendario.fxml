@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.entregable2.controllers.GenerarCalendarioController">
+   <children>
+      <Label layoutX="115.0" layoutY="20.0" text="Generar Calendario" textFill="#492551">
+         <font>
+            <Font name="System Bold" size="20.0"/>
+         </font>
+      </Label>
+      <Label fx:id="lblInfo" layoutX="50.0" layoutY="70.0" prefHeight="60.0" prefWidth="350.0" text="Seleccione el tipo de calendario que desea generar para la liga." wrapText="true">
+         <font>
+            <Font size="14.0"/>
+         </font>
+      </Label>
+      <VBox layoutX="100.0" layoutY="140.0" spacing="15.0" prefWidth="250.0">
+         <children>
+            <Button fx:id="btnGenerarIdaVuelta" onAction="#onGenerarIdaVueltaClick" prefWidth="250.0" text="Generar con ida y vuelta">
+               <font>
+                  <Font size="13.0"/>
+               </font>
+            </Button>
+            <Button fx:id="btnGenerarSoloIda" onAction="#onGenerarSoloIdaClick" prefWidth="250.0" text="Generar solo ida">
+               <font>
+                  <Font size="13.0"/>
+               </font>
+            </Button>
+         </children>
+      </VBox>
+      <Button fx:id="btnCancelar" layoutX="175.0" layoutY="260.0" mnemonicParsing="false" onAction="#onCancelarClick" text="Volver al Menu" prefWidth="100.0"/>
+      <Label fx:id="lblResultado" layoutX="50.0" layoutY="300.0" prefHeight="30.0" prefWidth="350.0" textFill="#008000" wrapText="true">
+         <font>
+            <Font name="System Bold" size="12.0"/>
+         </font>
+      </Label>
+   </children>
+</Pane>
+
