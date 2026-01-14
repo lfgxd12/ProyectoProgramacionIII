@@ -92,20 +92,17 @@ public class EquiposController {
             return;
         }
 
-        // Crear diálogo para editar
         javafx.scene.control.Dialog<javafx.util.Pair<String, String>> dialog =
             new javafx.scene.control.Dialog<>();
         dialog.setTitle("Modificar Equipo");
         dialog.setHeaderText("Editar datos del equipo: " + equipoSeleccionado.getNombre());
 
-        // Botones
         javafx.scene.control.ButtonType guardarBtn =
             new javafx.scene.control.ButtonType("Guardar",
                 javafx.scene.control.ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(
             guardarBtn, javafx.scene.control.ButtonType.CANCEL);
 
-        // Formulario
         javafx.scene.layout.GridPane grid = new javafx.scene.layout.GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
@@ -123,7 +120,6 @@ public class EquiposController {
 
         dialog.getDialogPane().setContent(grid);
 
-        // Convertir resultado
         dialog.setResultConverter(btn -> {
             if (btn == guardarBtn) {
                 return new javafx.util.Pair<>(txtNombre.getText(), txtCiudad.getText());
@@ -131,7 +127,6 @@ public class EquiposController {
             return null;
         });
 
-        // Procesar
         java.util.Optional<javafx.util.Pair<String, String>> result = dialog.showAndWait();
 
         result.ifPresent(datos -> {

@@ -1,13 +1,16 @@
+org\example\entregable2\dto\EquipoDTO.class
 org\example\entregable2\data\ListaEquipos.class
 org\example\entregable2\logica\Equipo.class
 org\example\entregable2\servicios\NavigationService.class
 org\example\entregable2\controllers\TablaPosicionesController$1.class
 module-info.class
 org\example\entregable2\controllers\PortadaController.class
+org\example\entregable2\datos\EquipoDatos.class
 org\example\entregable2\controllers\EquiposController.class
 org\example\entregable2\controllers\GenerarCalendarioController.class
 org\example\entregable2\controllers\ListaEquiposController.class
 org\example\entregable2\controllers\MenuController.class
+org\example\entregable2\dto\PartidoDTO.class
 org\example\entregable2\logica\Liga.class
 org\example\entregable2\controllers\RegistrarResultadosController.class
 org\example\entregable2\controllers\CalendarioController.class
