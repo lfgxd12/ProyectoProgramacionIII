@@ -99,7 +99,7 @@ public class NavigationService {
 
     public void mostrarListaEquipos() {
         try {
-            navigateTo("lista-equipos.fxml", "Lista de Equipos");
+            navigateTo("equipos.fxml", "Menú de Equipos");
         } catch (IOException e) {
             e.printStackTrace();
         }

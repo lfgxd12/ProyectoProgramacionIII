@@ -4,6 +4,8 @@ public class Equipo {
     private String nombre;
     private String ciudad;
     private String codigo;
+    private String estadio;
+    private String annioFundacion;
     private int pj;  // Partidos jugados
     private int g;   // Ganados
     private int e;   // Empatados
@@ -12,6 +14,7 @@ public class Equipo {
     private int gc;  // Goles en contra
     private int dg;  // Diferencia de goles
     private int pts; // Puntos
+    private boolean eliminado; // Marca si el equipo fue eliminado
 
     public Equipo(String nombre, String ciudad, String codigo) {
         this.nombre = nombre;
@@ -25,6 +28,7 @@ public class Equipo {
         this.gc = 0;
         this.dg = 0;
         this.pts = 0;
+        this.eliminado = false;
     }
 
     public void actualizarEstadisticas(int golesFavor, int golesContra) {
@@ -66,6 +70,7 @@ public class Equipo {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
 
     public String getCiudad() {
         return ciudad;
@@ -115,8 +120,35 @@ public class Equipo {
         return pts;
     }
 
+    public boolean isEliminado() {
+        return eliminado;
+    }
+
+    public void setEliminado(boolean eliminado) {
+        this.eliminado = eliminado;
+    }
+
+    public String getEstadio() {
+        return estadio;
+    }
+
+    public void setEstadio(String estadio) {
+        this.estadio = estadio;
+    }
+
+    public String getAnnioFundacion() {
+        return annioFundacion;
+    }
+
+    public void setAnnioFundacion(String annioFundacion) {
+        this.annioFundacion = annioFundacion;
+    }
+
     @Override
     public String toString() {
+        if (eliminado) {
+            return nombre + " (Equipo Borrado)";
+        }
         return nombre + " (" + codigo + ")";
     }
 }

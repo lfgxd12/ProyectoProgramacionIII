@@ -7,8 +7,6 @@ import org.example.entregable2.servicios.NavigationService;
 
 public class MenuController {
 
-    @FXML
-    private Button btnRegistrarEquipo;
 
     @FXML
     private Button btnListaEquipos;
@@ -36,7 +34,6 @@ public class MenuController {
     }
 
     private void configurarEventos() {
-        btnRegistrarEquipo.setOnAction(event -> onRegistrarEquipoClick());
         btnListaEquipos.setOnAction(event -> onListaEquiposClick());
         btnGenerarCalentario.setOnAction(event -> onGenerarCalendarioClick());
         btbListarCalendarioPorJornada.setOnAction(event -> onListarCalendarioClick());
@@ -45,10 +42,6 @@ public class MenuController {
         btnSalir2.setOnAction(event -> onSalirClick());
     }
 
-    @FXML
-    public void onRegistrarEquipoClick() {
-        NavigationService.getInstance().mostrarFormularioEquipo();
-    }
 
     @FXML
     public void onListaEquiposClick() {

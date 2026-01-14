@@ -74,6 +74,7 @@ public class RegistrarResultadosController {
             java.util.List<Partido> partidos = liga.listarPartidosPorJornada(jornadaSeleccionada);
             java.util.List<Partido> partidosPendientes = partidos.stream()
                 .filter(p -> !p.tieneResultado())
+                .filter(p -> !p.getLocal().isEliminado() && !p.getVisitante().isEliminado())
                 .collect(java.util.stream.Collectors.toList());
             javafx.collections.ObservableList<Partido> partidosObservable =
                 javafx.collections.FXCollections.observableArrayList(partidosPendientes);

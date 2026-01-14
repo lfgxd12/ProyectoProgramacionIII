@@ -58,19 +58,38 @@ public class CalendarioController {
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colJornada.setCellValueFactory(new PropertyValueFactory<>("jornada"));
 
-        colLocal.setCellValueFactory(cellData ->
-            new javafx.beans.property.SimpleStringProperty(
-                cellData.getValue().getLocal().getNombre()));
+        colLocal.setCellValueFactory(cellData -> {
+            Partido partido = cellData.getValue();
+            String nombreLocal = partido.getLocal().getNombre();
+            if (partido.getLocal().isEliminado()) {
+                nombreLocal += " (Equipo Borrado)";
+            }
+            return new javafx.beans.property.SimpleStringProperty(nombreLocal);
+        });
 
-        colVisitante.setCellValueFactory(cellData ->
-            new javafx.beans.property.SimpleStringProperty(
-                cellData.getValue().getVisitante().getNombre()));
+        colVisitante.setCellValueFactory(cellData -> {
+            Partido partido = cellData.getValue();
+            String nombreVisitante = partido.getVisitante().getNombre();
+            if (partido.getVisitante().isEliminado()) {
+                nombreVisitante += " (Equipo Borrado)";
+            }
+            return new javafx.beans.property.SimpleStringProperty(nombreVisitante);
+        });
 
         colResultado.setCellValueFactory(cellData -> {
             Partido partido = cellData.getValue();
-            String resultado = partido.tieneResultado()
-                ? partido.getGolesLocal() + " - " + partido.getGolesVisitante()
-                : "Pendiente";
+            String resultado;
+
+            // Si algún equipo fue eliminado y el partido no se jugó
+            if (!partido.tieneResultado() &&
+                (partido.getLocal().isEliminado() || partido.getVisitante().isEliminado())) {
+                resultado = "Cancelado";
+            } else if (partido.tieneResultado()) {
+                resultado = partido.getGolesLocal() + " - " + partido.getGolesVisitante();
+            } else {
+                resultado = "Pendiente";
+            }
+
             return new javafx.beans.property.SimpleStringProperty(resultado);
         });
     }
