@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="365.0" prefWidth="233.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.entregable2.controllers.GestorEquipoController">
+
+    <children>
+
+
+        <Pane prefHeight="70" style="-fx-background-color: #36003b;" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
+            <children>
+                <Label id="lblTituloGestor" fx:id="lblTituloGestor" layoutX="16" layoutY="22" prefHeight="37.0" prefWidth="158.0" text="Gestor de equipos" textFill="white">
+                    <font>
+                        <Font name="System Bold" size="16.0" />
+                    </font>
+                </Label>
+            </children>
+        </Pane>
+
+
+        <VBox prefHeight="145.0" prefWidth="209.0" spacing="12" style="-fx-background-color: #ffffff;                      -fx-border-color: #36003b;                      -fx-border-width: 2;                      -fx-border-radius: 12;                      -fx-background-radius: 12;                      -fx-padding: 14;" AnchorPane.bottomAnchor="166.0" AnchorPane.leftAnchor="12" AnchorPane.rightAnchor="12" AnchorPane.topAnchor="82">
+
+            <GridPane hgap="0" vgap="10">
+                <columnConstraints>
+                    <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="180.0" />
+                </columnConstraints>
+
+                <rowConstraints>
+                    <RowConstraints minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
+                </rowConstraints>
+
+                <children>
+
+                    <Button id="btnInscribirEquipo" fx:id="btnInscribirEquipo" mnemonicParsing="false" prefHeight="36" prefWidth="180" style="-fx-background-color: #36003b;                                    -fx-text-fill: white;                                    -fx-background-radius: 10;                                    -fx-font-weight: bold;" text="Inscribir equipo" />
+
+                    <Button id="btnEditarEquipo" fx:id="btnEditarEquipo" mnemonicParsing="false" prefHeight="36" prefWidth="180" style="-fx-background-color: white;                                    -fx-text-fill: #36003b;                                    -fx-border-color: #36003b;                                    -fx-border-width: 2;                                    -fx-background-radius: 10;                                    -fx-border-radius: 10;                                    -fx-font-weight: bold;" text="Editar equipo" GridPane.rowIndex="1" />
+
+                    <Button id="btnEliminarEquipo" fx:id="btnEliminarEquipo" mnemonicParsing="false" prefHeight="36" prefWidth="180" style="-fx-background-color: white;                                    -fx-text-fill: #36003b;                                    -fx-border-color: #36003b;                                    -fx-border-width: 2;                                    -fx-background-radius: 10;                                    -fx-border-radius: 10;                                    -fx-font-weight: bold;" text="Eliminar equipo" GridPane.rowIndex="2" />
+
+                </children>
+            </GridPane>
+
+        </VBox>
+      <ImageView id="pnglogo" fx:id="pnglogo" fitHeight="130.0" fitWidth="148.0" layoutX="43.0" layoutY="263.0">
+         <image>
+            <Image url="@premier%20logo.png" />
+         </image>
+      </ImageView>
+
+    </children>
+</AnchorPane>

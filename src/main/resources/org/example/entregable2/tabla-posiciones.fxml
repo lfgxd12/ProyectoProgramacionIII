@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.entregable2.controllers.TablaPosicionesController">
+    
+    <Pane prefHeight="90.0" style="-fx-background-color: #36003b;">
+        <children>
+            <Label id="lblTituloTabla" fx:id="lblTituloTabla" layoutX="22.0" layoutY="26.0" text="Tabla de Posiciones" textFill="white">
+                <font>
+                    <Font name="System Bold" size="24.0" />
+                </font>
+            </Label>
+        </children>
+    </Pane>
+
+    <VBox alignment="TOP_CENTER" spacing="14.0" style="-fx-padding: 18;">
+
+        <VBox spacing="10" style="-fx-background-color: #ffffff;                      -fx-border-color: #36003b;                      -fx-border-width: 2;                      -fx-border-radius: 12;                      -fx-background-radius: 12;                      -fx-padding: 12;">
+
+            <TableView fx:id="tablaPosiciones" prefHeight="440.0" prefWidth="860.0" style="-fx-background-radius: 10;                               -fx-border-radius: 10;">
+                <columns>
+                    <TableColumn id="colPosicion" fx:id="colPosicion" editable="false" prefWidth="50.0" text="Pos" />
+                    <TableColumn id="colEquipo" fx:id="colEquipo" editable="false" prefWidth="200.0" text="Equipo" />
+                    <TableColumn id="colPJ" fx:id="colPJ" editable="false" prefWidth="50.0" text="PJ" />
+                    <TableColumn id="colG" fx:id="colG" editable="false" prefWidth="50.0" text="G" />
+                    <TableColumn id="colE" fx:id="colE" editable="false" prefWidth="50.0" text="E" />
+                    <TableColumn id="colP" fx:id="colP" editable="false" prefWidth="50.0" text="P" />
+                    <TableColumn id="colGF" fx:id="colGF" editable="false" prefWidth="50.0" text="GF" />
+                    <TableColumn id="colGC" fx:id="colGC" editable="false" prefWidth="50.0" text="GC" />
+                    <TableColumn id="colGC" fx:id="colDG" editable="false" prefWidth="50.0" text="DG" />
+                    <TableColumn id="colPTS" fx:id="colPTS" editable="false" prefWidth="60.0" text="PTS" />
+                </columns>
+
+                <placeholder>
+                    <Label style="-fx-text-fill: #36003b; -fx-opacity: 0.8;" text="Tabla sin contenido" />
+                </placeholder>
+            </TableView>
+
+        </VBox>
+
+        <HBox alignment="CENTER" spacing="10.0">
+            <Button id="btnActualizar" fx:id="btnActualizar" onAction="#onActualizarClick" prefHeight="36" prefWidth="110" style="-fx-background-color: #36003b;                            -fx-text-fill: white;                            -fx-background-radius: 10;                            -fx-font-weight: bold;" text="Actualizar" />
+
+            <Button id="btnVolver" fx:id="btnVolver" onAction="#onVolverClick" prefHeight="36" prefWidth="140" style="-fx-background-color: white;                            -fx-text-fill: #36003b;                            -fx-border-color: #36003b;                            -fx-border-width: 2;                            -fx-background-radius: 10;                            -fx-border-radius: 10;                            -fx-font-weight: bold;" text="Volver al Menú" />
+        </HBox>
+
+    </VBox>
+</VBox>

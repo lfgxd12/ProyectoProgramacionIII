@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.entregable2.controllers.ListaEquiposController">
+   <children>
+      <Label layoutX="220.0" layoutY="20.0" text="Lista de Equipos" textFill="#492551">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tablaEquipos" layoutX="50.0" layoutY="60.0" prefHeight="280.0" prefWidth="500.0">
+        <columns>
+          <TableColumn fx:id="colCodigo" prefWidth="100.0" text="Código" />
+          <TableColumn fx:id="colNombre" prefWidth="250.0" text="Nombre" />
+            <TableColumn fx:id="colCiudad" prefWidth="150.0" text="Ciudad" />
+        </columns>
+      </TableView>
+      <Button fx:id="btnActualizar" layoutX="200.0" layoutY="350.0" mnemonicParsing="false" text="Actualizar" />
+      <Button fx:id="btnVolver" layoutX="320.0" layoutY="350.0" mnemonicParsing="false" text="Volver" />
+   </children>
+</Pane>
+

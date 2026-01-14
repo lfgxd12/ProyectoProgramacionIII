@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.entregable2.controllers.CalendarioController">
+
+    <Pane prefHeight="90.0" style="-fx-background-color: #36003b;">
+        <children>
+            <Label id="lblCalendario" fx:id="lblCalendario" layoutX="22.0" layoutY="26.0" text="Calendario de Partidos" textFill="white">
+                <font>
+                    <Font name="System Bold" size="24.0" />
+                </font>
+            </Label>
+
+            <Label id="lblDescripcion" fx:id="lblDescripcion" layoutX="22.0" layoutY="56.0" style="-fx-opacity: 0.85;" text="Filtra por jornada o muestra todos los partidos" textFill="white">
+                <font>
+                    <Font name="System" size="12.0" />
+                </font>
+            </Label>
+        </children>
+    </Pane>
+
+    <VBox alignment="TOP_CENTER" prefHeight="521.0" prefWidth="900.0" spacing="14.0" style="-fx-padding: 18;">
+        <!-- FILTROS (CARD) -->
+        <HBox alignment="CENTER" prefWidth="860" spacing="12.0" style="-fx-background-color: #ffffff;                      -fx-border-color: #36003b;                      -fx-border-width: 2;                      -fx-border-radius: 12;                      -fx-background-radius: 12;                      -fx-padding: 12;">
+
+            <Label id="lblFiltrar" fx:id="lblFiltrar" style="-fx-text-fill: #36003b; -fx-font-weight: bold;" text="Filtrar por jornada:">
+                <font>
+                    <Font name="System Bold" size="13.0" />
+                </font>
+            </Label>
+
+            <ComboBox fx:id="comboJornadas" prefWidth="170.0" promptText="Seleccione jornada" style="-fx-background-radius: 10;                              -fx-border-radius: 10;                              -fx-border-color: #cdb7d1;" />
+
+            <Button id="btnFiltrar" fx:id="btnFiltrar" onAction="#onFiltrarClick" prefHeight="34" prefWidth="90" style="-fx-background-color: #36003b;                            -fx-text-fill: white;                            -fx-background-radius: 10;                            -fx-font-weight: bold;" text="Filtrar" />
+
+            <Button id="btnMostrarTodos" fx:id="btnMostrarTodos" onAction="#onMostrarTodosClick" prefHeight="34" prefWidth="120" style="-fx-background-color: white;                            -fx-text-fill: #36003b;                            -fx-border-color: #36003b;                            -fx-border-width: 2;                            -fx-background-radius: 10;                            -fx-border-radius: 10;                            -fx-font-weight: bold;" text="Mostrar Todos" />
+        </HBox>
+
+        <VBox spacing="10" style="-fx-background-color: #ffffff;                      -fx-border-color: #36003b;                      -fx-border-width: 2;                      -fx-border-radius: 12;                      -fx-background-radius: 12;                      -fx-padding: 12;">
+
+            <TableView fx:id="tablaPartidos" prefHeight="420.0" prefWidth="860.0" style="-fx-background-radius: 10;                               -fx-border-radius: 10;">
+                <columns>
+                    <TableColumn id="colId" fx:id="colId" editable="false" prefWidth="50.0" text="ID" />
+                    <TableColumn id="colJornada" fx:id="colJornada" editable="false" prefWidth="80.0" text="Jornada" />
+                    <TableColumn id="colLocal" fx:id="colLocal" editable="false" prefWidth="250.0" text="Equipo Local" />
+                    <TableColumn id="colVisitante" fx:id="colVisitante" editable="false" prefWidth="250.0" text="Equipo Visitante" />
+                    <TableColumn id="colResultado" fx:id="colResultado" editable="false" prefWidth="150.0" text="Resultado" />
+                </columns>
+
+                <placeholder>
+                    <Label style="-fx-text-fill: #36003b; -fx-opacity: 0.8;" text="Tabla sin contenido" />
+                </placeholder>
+            </TableView>
+
+        </VBox>
+        <HBox alignment="CENTER" spacing="10.0">
+            <Button id="btnVolver" fx:id="btnVolver" onAction="#onVolverClick" prefHeight="36" prefWidth="140" style="-fx-background-color: white;                            -fx-text-fill: #36003b;                            -fx-border-color: #36003b;                            -fx-border-width: 2;                            -fx-background-radius: 10;                            -fx-border-radius: 10;                            -fx-font-weight: bold;" text="Volver al Menú" />
+        </HBox>
+
+    </VBox>
+
+</VBox>
