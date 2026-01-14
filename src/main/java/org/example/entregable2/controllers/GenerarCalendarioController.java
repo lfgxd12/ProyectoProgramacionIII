@@ -62,8 +62,30 @@ public class GenerarCalendarioController {
 
             if (liga.getEquipos().size() < 2) {
                 mostrarAlerta(AlertType.WARNING, "Advertencia",
-                    "Se necesitan al menos 2 equipos para generar el calendario");
+                        "Se necesitan al menos 2 equipos para generar el calendario");
                 return;
+            }
+
+            if (!liga.getCalendario().isEmpty()) {
+                Alert confimacion = new Alert(AlertType.CONFIRMATION);
+                confimacion.setTitle("Confirmación");
+                confimacion.setHeaderText("Ya existe un calendario generado");
+                confimacion.setContentText(
+                        "¿Desea regenerar el calendario?\n\n" +
+                                "ADVERTENCIA: Esto eliminará el calendario actual y " +
+                                "reiniciará todas las estadísticas de los equipos " +
+                                "(puntos, goles, partidos jugados).");
+
+                java.util.Optional<javafx.scene.control.ButtonType> resultados =
+                        confimacion.showAndWait();
+
+                if (resultados.isEmpty() ||
+                        resultados.get() != javafx.scene.control.ButtonType.OK) {
+                    return;
+                }
+
+                // Reiniciar temporada completa
+                liga.reiniciarTemporada();
             }
 
             liga.generarCalendario(idaVuelta);
@@ -73,13 +95,15 @@ public class GenerarCalendarioController {
                 lblResultado.setText("Calendario de " + tipo + " generado exitosamente");
             }
             mostrarAlerta(AlertType.INFORMATION, "Éxito",
-                "El calendario se ha generado correctamente");
+                    "El calendario se ha generado correctamente");
 
-        } catch (Exception e) {
+        } catch(Exception e){
             mostrarAlerta(AlertType.ERROR, "Error",
-                "Error al generar el calendario: " + e.getMessage());
+                    "Error al generar el calendario: " + e.getMessage());
         }
+
     }
+
 
     @FXML
     public void onCancelarClick() {

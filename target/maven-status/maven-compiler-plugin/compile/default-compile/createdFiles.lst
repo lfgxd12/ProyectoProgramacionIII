@@ -6,6 +6,7 @@ module-info.class
 org\example\entregable2\controllers\PortadaController.class
 org\example\entregable2\controllers\EquiposController.class
 org\example\entregable2\controllers\GenerarCalendarioController.class
+org\example\entregable2\controllers\ListaEquiposController.class
 org\example\entregable2\controllers\MenuController.class
 org\example\entregable2\logica\Liga.class
 org\example\entregable2\controllers\RegistrarResultadosController.class

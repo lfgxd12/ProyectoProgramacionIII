@@ -54,16 +54,25 @@ public class RegistrarEquipoController {
             return false;
         }
         if (txtCiudad.getText() == null || txtCiudad.getText().trim().isEmpty()) {
-            mostrarAlerta(AlertType.WARNING, "Advertencia", "La capacidad del estadio es obligatoria");
+            mostrarAlerta(AlertType.WARNING, "Advertencia", "El nombre de la ciudad es obligatorio");
+            return false;
+        }
+
+        if (txtCodigo.getText() == null || txtCodigo.getText().trim().isEmpty()){
+            mostrarAlerta(AlertType.WARNING, "Advertencia", "El código del equipo es obligatorio");
+            return false;
+        }
+
+        if (txtCodigo.getText().trim().length() < 3){
+            mostrarAlerta(AlertType.WARNING, "Advertencia", "El código del equipo debe tener al menos 3 caracteres");
             return false;
         }
 
         try {
             Integer.parseInt(txtAnioFundacion.getText().trim());
-            Integer.parseInt(txtCiudad.getText().trim());
         } catch (NumberFormatException e) {
             mostrarAlerta(AlertType.WARNING, "Advertencia",
-                "El año de fundación y la capacidad deben ser números válidos");
+                "El año de fundación debe ser un número válido");
             return false;
         }
 
@@ -83,8 +92,8 @@ public class RegistrarEquipoController {
             }
 
             String nombre = txtNombreEquipo.getText().trim();
-            String ciudad = txtNombreEstadio.getText().trim();
-            String codigo = nombre.substring(0, Math.min(3, nombre.length())).toUpperCase();
+            String ciudad = txtCiudad.getText().trim();
+            String codigo = txtCodigo.getText().trim().toUpperCase();
 
             Equipo equipo = new Equipo(nombre, ciudad, codigo);
 
@@ -109,6 +118,7 @@ public class RegistrarEquipoController {
         txtAnioFundacion.clear();
         txtNombreEstadio.clear();
         txtCiudad.clear();
+        txtCodigo.clear();
     }
 
     @FXML

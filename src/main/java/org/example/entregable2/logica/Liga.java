@@ -42,17 +42,13 @@ public class Liga {
             return false;
         }
 
-        boolean tienePartidosJugados = calendario.stream()
-            .anyMatch(p -> (p.getLocal().equals(equipo) || p.getVisitante().equals(equipo))
-                && p.tieneResultado());
 
-        if (tienePartidosJugados) {
-            throw new IllegalStateException("No se puede eliminar el equipo porque tiene partidos jugados");
-        }
+        equipo.setEliminado(true);
 
-        calendario.removeIf(p -> p.getLocal().equals(equipo) || p.getVisitante().equals(equipo));
 
-        return equipos.eliminar(codigo);
+        equipo.setNombre(equipo.getNombre());
+
+        return true;
     }
 
     public void generarCalendario(boolean idaVuelta) {
@@ -60,11 +56,22 @@ public class Liga {
             throw new IllegalStateException("Se necesitan al menos 2 equipos para generar el calendario");
         }
 
+        for (Equipo equipo : equipos.obtenerTodos()) {
+            if (!equipo.isEliminado()) {
+                equipo.reiniciarTemporada();
+            }
+        }
+
         calendario.clear();
         partidosPorJornada.clear();
         contadorPartidos = 1;
 
-        List<Equipo> equiposCalendario = new ArrayList<>(equipos.obtenerTodos());
+
+        List<Equipo> equiposCalendario = new ArrayList<>(
+            equipos.obtenerTodos().stream()
+                .filter(e -> !e.isEliminado())
+                .collect(Collectors.toList())
+        );
         int numEquipos = equiposCalendario.size();
 
         boolean esImpar = numEquipos % 2 != 0;
@@ -172,6 +179,7 @@ public class Liga {
 
     public List<Equipo> calcularTabla() {
         return equipos.obtenerTodos().stream()
+            .filter(e -> !e.isEliminado())
             .sorted((e1, e2) -> {
                 int comparacionPuntos = Integer.compare(e2.getPts(), e1.getPts());
                 if (comparacionPuntos != 0) return comparacionPuntos;
@@ -191,6 +199,15 @@ public class Liga {
         return equipos.buscarPorCodigo(codigo);
     }
 
+    public void reiniciarTemporada() {
+        for (Equipo equipo : equipos.obtenerTodos()) {
+            equipo.reiniciarTemporada();
+        }
+        calendario.clear();
+        partidosPorJornada.clear();
+        contadorPartidos = 1;
+    }
+
     public String getNombre() {
         return nombre;
     }
@@ -200,7 +217,9 @@ public class Liga {
     }
 
     public List<Equipo> getEquipos() {
-        return new ArrayList<>(equipos.obtenerTodos());
+        return equipos.obtenerTodos().stream()
+            .filter(e -> !e.isEliminado())
+            .collect(Collectors.toList());
     }
 
     public List<Partido> getCalendario() {

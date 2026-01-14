@@ -1,18 +1,19 @@
-C:\Users\Jerem\IdeaProjects\Entregable 2 Progra III\Entregable 2 Progra III\Entregable2\Entregable2\src\main\java\module-info.java
-C:\Users\Jerem\IdeaProjects\Entregable 2 Progra III\Entregable 2 Progra III\Entregable2\Entregable2\src\main\java\org\example\entregable2\controllers\CalendarioController.java
-C:\Users\Jerem\IdeaProjects\Entregable 2 Progra III\Entregable 2 Progra III\Entregable2\Entregable2\src\main\java\org\example\entregable2\controllers\EquiposController.java
-C:\Users\Jerem\IdeaProjects\Entregable 2 Progra III\Entregable 2 Progra III\Entregable2\Entregable2\src\main\java\org\example\entregable2\controllers\GenerarCalendarioController.java
-C:\Users\Jerem\IdeaProjects\Entregable 2 Progra III\Entregable 2 Progra III\Entregable2\Entregable2\src\main\java\org\example\entregable2\controllers\GestorEquipoController.java
-C:\Users\Jerem\IdeaProjects\Entregable 2 Progra III\Entregable 2 Progra III\Entregable2\Entregable2\src\main\java\org\example\entregable2\controllers\MenuController.java
-C:\Users\Jerem\IdeaProjects\Entregable 2 Progra III\Entregable 2 Progra III\Entregable2\Entregable2\src\main\java\org\example\entregable2\controllers\PortadaController.java
-C:\Users\Jerem\IdeaProjects\Entregable 2 Progra III\Entregable 2 Progra III\Entregable2\Entregable2\src\main\java\org\example\entregable2\controllers\RegistrarEquipoController.java
-C:\Users\Jerem\IdeaProjects\Entregable 2 Progra III\Entregable 2 Progra III\Entregable2\Entregable2\src\main\java\org\example\entregable2\controllers\RegistrarResultadosController.java
-C:\Users\Jerem\IdeaProjects\Entregable 2 Progra III\Entregable 2 Progra III\Entregable2\Entregable2\src\main\java\org\example\entregable2\controllers\TablaPosicionesController.java
-C:\Users\Jerem\IdeaProjects\Entregable 2 Progra III\Entregable 2 Progra III\Entregable2\Entregable2\src\main\java\org\example\entregable2\data\ListaEquipos.java
-C:\Users\Jerem\IdeaProjects\Entregable 2 Progra III\Entregable 2 Progra III\Entregable2\Entregable2\src\main\java\org\example\entregable2\data\NodoEquipo.java
-C:\Users\Jerem\IdeaProjects\Entregable 2 Progra III\Entregable 2 Progra III\Entregable2\Entregable2\src\main\java\org\example\entregable2\HelloApplication.java
-C:\Users\Jerem\IdeaProjects\Entregable 2 Progra III\Entregable 2 Progra III\Entregable2\Entregable2\src\main\java\org\example\entregable2\Launcher.java
-C:\Users\Jerem\IdeaProjects\Entregable 2 Progra III\Entregable 2 Progra III\Entregable2\Entregable2\src\main\java\org\example\entregable2\logica\Equipo.java
-C:\Users\Jerem\IdeaProjects\Entregable 2 Progra III\Entregable 2 Progra III\Entregable2\Entregable2\src\main\java\org\example\entregable2\logica\Liga.java
-C:\Users\Jerem\IdeaProjects\Entregable 2 Progra III\Entregable 2 Progra III\Entregable2\Entregable2\src\main\java\org\example\entregable2\logica\Partido.java
-C:\Users\Jerem\IdeaProjects\Entregable 2 Progra III\Entregable 2 Progra III\Entregable2\Entregable2\src\main\java\org\example\entregable2\servicios\NavigationService.java
+C:\Users\lfgxd\OneDrive\Escritorio\Proyecto P3 Actualizado\ProyectoProgramacionIII\src\main\java\module-info.java
+C:\Users\lfgxd\OneDrive\Escritorio\Proyecto P3 Actualizado\ProyectoProgramacionIII\src\main\java\org\example\entregable2\controllers\CalendarioController.java
+C:\Users\lfgxd\OneDrive\Escritorio\Proyecto P3 Actualizado\ProyectoProgramacionIII\src\main\java\org\example\entregable2\controllers\EquiposController.java
+C:\Users\lfgxd\OneDrive\Escritorio\Proyecto P3 Actualizado\ProyectoProgramacionIII\src\main\java\org\example\entregable2\controllers\GenerarCalendarioController.java
+C:\Users\lfgxd\OneDrive\Escritorio\Proyecto P3 Actualizado\ProyectoProgramacionIII\src\main\java\org\example\entregable2\controllers\GestorEquipoController.java
+C:\Users\lfgxd\OneDrive\Escritorio\Proyecto P3 Actualizado\ProyectoProgramacionIII\src\main\java\org\example\entregable2\controllers\ListaEquiposController.java
+C:\Users\lfgxd\OneDrive\Escritorio\Proyecto P3 Actualizado\ProyectoProgramacionIII\src\main\java\org\example\entregable2\controllers\MenuController.java
+C:\Users\lfgxd\OneDrive\Escritorio\Proyecto P3 Actualizado\ProyectoProgramacionIII\src\main\java\org\example\entregable2\controllers\PortadaController.java
+C:\Users\lfgxd\OneDrive\Escritorio\Proyecto P3 Actualizado\ProyectoProgramacionIII\src\main\java\org\example\entregable2\controllers\RegistrarEquipoController.java
+C:\Users\lfgxd\OneDrive\Escritorio\Proyecto P3 Actualizado\ProyectoProgramacionIII\src\main\java\org\example\entregable2\controllers\RegistrarResultadosController.java
+C:\Users\lfgxd\OneDrive\Escritorio\Proyecto P3 Actualizado\ProyectoProgramacionIII\src\main\java\org\example\entregable2\controllers\TablaPosicionesController.java
+C:\Users\lfgxd\OneDrive\Escritorio\Proyecto P3 Actualizado\ProyectoProgramacionIII\src\main\java\org\example\entregable2\data\ListaEquipos.java
+C:\Users\lfgxd\OneDrive\Escritorio\Proyecto P3 Actualizado\ProyectoProgramacionIII\src\main\java\org\example\entregable2\data\NodoEquipo.java
+C:\Users\lfgxd\OneDrive\Escritorio\Proyecto P3 Actualizado\ProyectoProgramacionIII\src\main\java\org\example\entregable2\HelloApplication.java
+C:\Users\lfgxd\OneDrive\Escritorio\Proyecto P3 Actualizado\ProyectoProgramacionIII\src\main\java\org\example\entregable2\Launcher.java
+C:\Users\lfgxd\OneDrive\Escritorio\Proyecto P3 Actualizado\ProyectoProgramacionIII\src\main\java\org\example\entregable2\logica\Equipo.java
+C:\Users\lfgxd\OneDrive\Escritorio\Proyecto P3 Actualizado\ProyectoProgramacionIII\src\main\java\org\example\entregable2\logica\Liga.java
+C:\Users\lfgxd\OneDrive\Escritorio\Proyecto P3 Actualizado\ProyectoProgramacionIII\src\main\java\org\example\entregable2\logica\Partido.java
+C:\Users\lfgxd\OneDrive\Escritorio\Proyecto P3 Actualizado\ProyectoProgramacionIII\src\main\java\org\example\entregable2\servicios\NavigationService.java
