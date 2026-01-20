@@ -140,6 +140,12 @@ public class EquiposController {
                 liga.editarEquipo(equipoSeleccionado.getCodigo(),
                     datos.getKey().trim(), datos.getValue().trim());
 
+                try {
+                    org.example.entregable2.servicios.PersistenciaService.getInstance().guardarLiga(liga);
+                } catch (Exception ex) {
+                    System.err.println("Error al guardar datos: " + ex.getMessage());
+                }
+
                 mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito",
                     "Equipo modificado correctamente");
                 cargarEquipos();
@@ -181,6 +187,12 @@ public class EquiposController {
                 boolean eliminado = liga.eliminarEquipo(equipoSeleccionado.getCodigo());
 
                 if(eliminado){
+                    try {
+                        org.example.entregable2.servicios.PersistenciaService.getInstance().guardarLiga(liga);
+                    } catch (Exception ex) {
+                        System.err.println("Error al guardar datos: " + ex.getMessage());
+                    }
+
                     mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito",
                             "Equipo marcado como eliminado correctamente.\n" +
                             "Ya no aparecerá en la lista de equipos activos.");
