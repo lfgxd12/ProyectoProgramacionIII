@@ -113,6 +113,14 @@ public class NavigationService {
         }
     }
 
+    public void mostrarSimulacion() {
+        try {
+            navigateTo("simulacion-jornadas.fxml", "Simulación de Jornadas");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public Stage getPrimaryStage() {
         return primaryStage;
     }

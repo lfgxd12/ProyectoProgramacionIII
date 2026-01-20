@@ -104,5 +104,16 @@ public class Partido {
             " [" + golesLocal + "-" + golesVisitante + "]" : " [Pendiente]";
         return local.getNombre() + " vs " + visitante.getNombre() + resultado;
     }
-}
 
+    public org.example.entregable2.dto.PartidoDTO toDTO() {
+        org.example.entregable2.dto.PartidoDTO dto = new org.example.entregable2.dto.PartidoDTO(
+            id, jornada, local.getCodigo(), visitante.getCodigo()
+        );
+        dto.setFecha(fecha);
+        if (tieneResultado()) {
+            dto.setGolesLocal(golesLocal);
+            dto.setGolesVisitante(golesVisitante);
+        }
+        return dto;
+    }
+}

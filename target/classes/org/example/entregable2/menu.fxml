@@ -59,6 +59,7 @@
                     <RowConstraints />
                     <RowConstraints />
                     <RowConstraints />
+                    <RowConstraints />
                 </rowConstraints>
 
                 <children>
@@ -71,9 +72,11 @@
 
                     <Button id="btnRegistrarResultados" fx:id="btnRegistrarResultados" prefHeight="44" prefWidth="220" style="-fx-background-color: white;                                    -fx-border-color: #36003b;                                    -fx-border-width: 2;                                    -fx-background-radius: 10;                                    -fx-border-radius: 10;                                    -fx-font-weight: bold;                                    -fx-text-fill: #36003b;" text="Registrar resultados" GridPane.rowIndex="2" />
 
+                    <Button id="btnSimularJornada" fx:id="btnSimularJornada" prefHeight="44" prefWidth="220" style="-fx-background-color: white;                                    -fx-border-color: #36003b;                                    -fx-border-width: 2;                                    -fx-background-radius: 10;                                    -fx-border-radius: 10;                                    -fx-font-weight: bold;                                    -fx-text-fill: #36003b;" text="Simular Jornada" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
                     <Button id="btbMostrarTablaDePosiciones" fx:id="btbMostrarTablaDePosiciones" prefHeight="44" prefWidth="220" style="-fx-background-color: white;                                    -fx-border-color: #36003b;                                    -fx-border-width: 2;                                    -fx-background-radius: 10;                                    -fx-border-radius: 10;                                    -fx-font-weight: bold;                                    -fx-text-fill: #36003b;" text="Tabla de posiciones" GridPane.columnIndex="1" GridPane.rowIndex="1" />
       
-                        <Button id="btnSalir2" fx:id="btnSalir2" maxWidth="1.7976931348623157E308" prefHeight="44.0" prefWidth="227.0" style="-fx-background-color: #36003b;                            -fx-text-fill: white;                            -fx-background-radius: 10;                            -fx-font-size: 13;                            -fx-font-weight: bold;" text="Salir" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Button id="btnSalir2" fx:id="btnSalir2" maxWidth="1.7976931348623157E308" prefHeight="44.0" prefWidth="455.0" style="-fx-background-color: #36003b;                            -fx-text-fill: white;                            -fx-background-radius: 10;                            -fx-font-size: 13;                            -fx-font-weight: bold;" text="Salir" GridPane.columnSpan="2" GridPane.rowIndex="3" />
                 </children>
             </GridPane>
 

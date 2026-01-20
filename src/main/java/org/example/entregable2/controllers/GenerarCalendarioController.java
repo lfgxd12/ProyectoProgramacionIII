@@ -21,6 +21,7 @@ public class GenerarCalendarioController {
     @FXML
     private Button btnGenerarSoloIda;
 
+
     @FXML
     private Button btnCancelar;
 
@@ -90,6 +91,12 @@ public class GenerarCalendarioController {
 
             liga.generarCalendario(idaVuelta);
 
+            try {
+                org.example.entregable2.servicios.PersistenciaService.getInstance().guardarLiga(liga);
+            } catch (Exception ex) {
+                System.err.println("Error al guardar datos: " + ex.getMessage());
+            }
+
             if (lblResultado != null) {
                 String tipo = idaVuelta ? "ida y vuelta" : "solo ida";
                 lblResultado.setText("Calendario de " + tipo + " generado exitosamente");
@@ -109,6 +116,7 @@ public class GenerarCalendarioController {
     public void onCancelarClick() {
         org.example.entregable2.servicios.NavigationService.getInstance().mostrarMenuPrincipal();
     }
+
 
     private void mostrarAlerta(AlertType tipo, String titulo, String mensaje) {
         Alert alert = new Alert(tipo);

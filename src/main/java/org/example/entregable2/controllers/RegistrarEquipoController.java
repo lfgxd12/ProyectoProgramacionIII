@@ -99,6 +99,12 @@ public class RegistrarEquipoController {
 
             liga.registrarEquipo(equipo);
 
+            try {
+                org.example.entregable2.servicios.PersistenciaService.getInstance().guardarLiga(liga);
+            } catch (Exception ex) {
+                System.err.println("Error al guardar datos: " + ex.getMessage());
+            }
+
             mostrarAlerta(AlertType.INFORMATION, "Éxito",
                 "Equipo registrado correctamente");
 
