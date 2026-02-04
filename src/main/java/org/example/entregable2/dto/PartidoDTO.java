@@ -3,16 +3,19 @@ package org.example.entregable2.dto;
 import javafx.beans.property.*;
 import java.util.Date;
 
-
 public class PartidoDTO {
 
     private final IntegerProperty id = new SimpleIntegerProperty(this, "id", 0);
-    private final IntegerProperty jornada = new SimpleIntegerProperty(this, "jornada", 0);
+    private final IntegerProperty idJornada = new SimpleIntegerProperty(this, "idJornada", 0);
+    private final IntegerProperty idTemporada = new SimpleIntegerProperty(this, "idTemporada", 0);
+    private final IntegerProperty jornada = new SimpleIntegerProperty(this, "jornada", 0); // Mantener por compatibilidad
     private final ObjectProperty<Date> fecha = new SimpleObjectProperty<>(this, "fecha", new Date());
     private final StringProperty equipoLocalCodigo = new SimpleStringProperty(this, "equipoLocalCodigo", "");
     private final StringProperty equipoVisitanteCodigo = new SimpleStringProperty(this, "equipoVisitanteCodigo", "");
+    private final StringProperty estadio = new SimpleStringProperty(this, "estadio", "");
     private final IntegerProperty golesLocal = new SimpleIntegerProperty(this, "golesLocal", -1);
     private final IntegerProperty golesVisitante = new SimpleIntegerProperty(this, "golesVisitante", -1);
+    private final StringProperty estado = new SimpleStringProperty(this, "estado", "PENDIENTE");
     private final BooleanProperty tieneResultado = new SimpleBooleanProperty(this, "tieneResultado", false);
 
     public PartidoDTO() {
@@ -25,7 +28,14 @@ public class PartidoDTO {
         setEquipoVisitanteCodigo(equipoVisitanteCodigo);
     }
 
-    /* ========================== ID ========================== */
+    public PartidoDTO(int id, int idJornada, int idTemporada, String equipoLocalCodigo, String equipoVisitanteCodigo) {
+        setId(id);
+        setIdJornada(idJornada);
+        setIdTemporada(idTemporada);
+        setEquipoLocalCodigo(equipoLocalCodigo);
+        setEquipoVisitanteCodigo(equipoVisitanteCodigo);
+    }
+
     public int getId() {
         return id.get();
     }
@@ -38,7 +48,30 @@ public class PartidoDTO {
         return id;
     }
 
-    /* ========================== JORNADA ========================== */
+    public int getIdJornada() {
+        return idJornada.get();
+    }
+
+    public void setIdJornada(int idJornada) {
+        this.idJornada.set(idJornada);
+    }
+
+    public IntegerProperty idJornadaProperty() {
+        return idJornada;
+    }
+
+    public int getIdTemporada() {
+        return idTemporada.get();
+    }
+
+    public void setIdTemporada(int idTemporada) {
+        this.idTemporada.set(idTemporada);
+    }
+
+    public IntegerProperty idTemporadaProperty() {
+        return idTemporada;
+    }
+
     public int getJornada() {
         return jornada.get();
     }
@@ -51,7 +84,6 @@ public class PartidoDTO {
         return jornada;
     }
 
-    /* ========================== FECHA ========================== */
     public Date getFecha() {
         return fecha.get();
     }
@@ -64,7 +96,6 @@ public class PartidoDTO {
         return fecha;
     }
 
-    /* ========================== EQUIPO LOCAL CÓDIGO ========================== */
     public String getEquipoLocalCodigo() {
         return equipoLocalCodigo.get();
     }
@@ -77,7 +108,6 @@ public class PartidoDTO {
         return equipoLocalCodigo;
     }
 
-    /* ========================== EQUIPO VISITANTE CÓDIGO ========================== */
     public String getEquipoVisitanteCodigo() {
         return equipoVisitanteCodigo.get();
     }
@@ -90,7 +120,18 @@ public class PartidoDTO {
         return equipoVisitanteCodigo;
     }
 
-    /* ========================== GOLES LOCAL ========================== */
+    public String getEstadio() {
+        return estadio.get();
+    }
+
+    public void setEstadio(String estadio) {
+        this.estadio.set(estadio);
+    }
+
+    public StringProperty estadioProperty() {
+        return estadio;
+    }
+
     public int getGolesLocal() {
         return golesLocal.get();
     }
@@ -104,7 +145,6 @@ public class PartidoDTO {
         return golesLocal;
     }
 
-    /* ========================== GOLES VISITANTE ========================== */
     public int getGolesVisitante() {
         return golesVisitante.get();
     }
@@ -118,7 +158,18 @@ public class PartidoDTO {
         return golesVisitante;
     }
 
-    /* ========================== TIENE RESULTADO ========================== */
+    public String getEstado() {
+        return estado.get();
+    }
+
+    public void setEstado(String estado) {
+        this.estado.set(estado);
+    }
+
+    public StringProperty estadoProperty() {
+        return estado;
+    }
+
     public boolean isTieneResultado() {
         return tieneResultado.get();
     }
@@ -133,6 +184,9 @@ public class PartidoDTO {
 
     private void updateTieneResultado() {
         setTieneResultado(golesLocal.get() >= 0 && golesVisitante.get() >= 0);
+        if (isTieneResultado()) {
+            setEstado("FINALIZADO");
+        }
     }
 
     @Override

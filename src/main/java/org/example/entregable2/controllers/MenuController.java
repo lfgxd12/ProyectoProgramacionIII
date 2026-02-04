@@ -7,7 +7,6 @@ import org.example.entregable2.servicios.NavigationService;
 
 public class MenuController {
 
-
     @FXML
     private Button btnListaEquipos;
 
@@ -53,7 +52,6 @@ public class MenuController {
         }
         btnSalir2.setOnAction(event -> onSalirClick());
     }
-
 
     @FXML
     public void onListaEquiposClick() {

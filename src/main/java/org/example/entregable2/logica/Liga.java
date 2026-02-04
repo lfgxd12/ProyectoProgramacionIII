@@ -42,9 +42,7 @@ public class Liga {
             return false;
         }
 
-
         equipo.setEliminado(true);
-
 
         equipo.setNombre(equipo.getNombre());
 
@@ -65,7 +63,6 @@ public class Liga {
         calendario.clear();
         partidosPorJornada.clear();
         contadorPartidos = 1;
-
 
         List<Equipo> equiposCalendario = new ArrayList<>(
             equipos.obtenerTodos().stream()
@@ -167,10 +164,8 @@ public class Liga {
             throw new IllegalStateException("Este partido ya tiene un resultado registrado");
         }
 
-        // Registra resultado en el partido
         partido.registrarResultado(golesLocal, golesVisitante);
 
-        // Actualiza estadísticas de los equipos
         partido.getLocal().aplicarResultado(golesLocal, golesVisitante);
         partido.getVisitante().aplicarResultado(golesVisitante, golesLocal);
 
@@ -346,5 +341,4 @@ public class Liga {
         return equipos.obtenerTodos();
     }
 }
-
 

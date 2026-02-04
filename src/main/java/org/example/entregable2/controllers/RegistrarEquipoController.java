@@ -37,7 +37,6 @@ public class RegistrarEquipoController {
 
     @FXML
     public void initialize() {
-        // Revisar la logica
     }
 
     private boolean validarDatos() {

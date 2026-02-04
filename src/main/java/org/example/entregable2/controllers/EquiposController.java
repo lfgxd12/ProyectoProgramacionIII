@@ -63,7 +63,6 @@ public class EquiposController {
         NavigationService.getInstance().mostrarFormularioEquipo();
     }
 
-
     private void configurarEventos() {
         if (btnActualizar != null) {
             btnActualizar.setOnAction(event -> onActualizarClick());

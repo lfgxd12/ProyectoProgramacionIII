@@ -21,7 +21,6 @@ public class GenerarCalendarioController {
     @FXML
     private Button btnGenerarSoloIda;
 
-
     @FXML
     private Button btnCancelar;
 
@@ -85,7 +84,6 @@ public class GenerarCalendarioController {
                     return;
                 }
 
-                // Reiniciar temporada completa
                 liga.reiniciarTemporada();
             }
 
@@ -111,12 +109,10 @@ public class GenerarCalendarioController {
 
     }
 
-
     @FXML
     public void onCancelarClick() {
         org.example.entregable2.servicios.NavigationService.getInstance().mostrarMenuPrincipal();
     }
-
 
     private void mostrarAlerta(AlertType tipo, String titulo, String mensaje) {
         Alert alert = new Alert(tipo);

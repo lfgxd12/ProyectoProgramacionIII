@@ -73,7 +73,6 @@ public class Equipo {
         this.nombre = nombre;
     }
 
-
     public String getCiudad() {
         return ciudad;
     }
@@ -169,13 +168,11 @@ public class Equipo {
         return dto;
     }
 
-
     public static Equipo fromDTO(EquipoDTO dto) {
         Equipo equipo = new Equipo(dto.getNombre(), dto.getCiudad(), dto.getCodigo());
         equipo.setEstadio(dto.getEstadio());
         equipo.setAnnioFundacion(String.valueOf(dto.getAnioFundacion()));
         equipo.setEliminado(dto.isEliminado());
-
 
         equipo.pj = dto.getPj();
         equipo.g = dto.getG();

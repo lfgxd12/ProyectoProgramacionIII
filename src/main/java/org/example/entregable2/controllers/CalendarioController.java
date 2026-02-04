@@ -80,7 +80,6 @@ public class CalendarioController {
             Partido partido = cellData.getValue();
             String resultado;
 
-            // Si algún equipo fue eliminado y el partido no se jugó
             if (!partido.tieneResultado() &&
                 (partido.getLocal().isEliminado() || partido.getVisitante().isEliminado())) {
                 resultado = "Cancelado";

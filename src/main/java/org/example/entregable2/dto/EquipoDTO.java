@@ -2,7 +2,6 @@ package org.example.entregable2.dto;
 
 import javafx.beans.property.*;
 
-
 public class EquipoDTO {
 
     private final IntegerProperty idEquipo = new SimpleIntegerProperty(this, "idEquipo", 0);
@@ -13,7 +12,6 @@ public class EquipoDTO {
     private final IntegerProperty anioFundacion = new SimpleIntegerProperty(this, "anioFundacion", 0);
     private final BooleanProperty eliminado = new SimpleBooleanProperty(this, "eliminado", false);
 
-    // Estadísticas del equipo
     private final IntegerProperty pj = new SimpleIntegerProperty(this, "pj", 0);
     private final IntegerProperty g = new SimpleIntegerProperty(this, "g", 0);
     private final IntegerProperty e = new SimpleIntegerProperty(this, "e", 0);
@@ -35,7 +33,6 @@ public class EquipoDTO {
         setAnioFundacion(anioFundacion);
     }
 
-    /* ========================== ID EQUIPO ========================== */
     public int getIdEquipo() {
         return idEquipo.get();
     }
@@ -48,7 +45,6 @@ public class EquipoDTO {
         return idEquipo;
     }
 
-    /* ========================== CÓDIGO ========================== */
     public String getCodigo() {
         return codigo.get();
     }
@@ -61,7 +57,6 @@ public class EquipoDTO {
         return codigo;
     }
 
-    /* ========================== NOMBRE ========================== */
     public String getNombre() {
         return nombre.get();
     }
@@ -74,7 +69,6 @@ public class EquipoDTO {
         return nombre;
     }
 
-    /* ========================== CIUDAD ========================== */
     public String getCiudad() {
         return ciudad.get();
     }
@@ -87,7 +81,6 @@ public class EquipoDTO {
         return ciudad;
     }
 
-    /* ========================== ESTADIO ========================== */
     public String getEstadio() {
         return estadio.get();
     }
@@ -100,7 +93,6 @@ public class EquipoDTO {
         return estadio;
     }
 
-    /* ========================== AÑO DE FUNDACIÓN ========================== */
     public int getAnioFundacion() {
         return anioFundacion.get();
     }
@@ -113,7 +105,6 @@ public class EquipoDTO {
         return anioFundacion;
     }
 
-    /* ========================== ELIMINADO ========================== */
     public boolean isEliminado() {
         return eliminado.get();
     }
@@ -126,7 +117,6 @@ public class EquipoDTO {
         return eliminado;
     }
 
-    /* ========================== PARTIDOS JUGADOS ========================== */
     public int getPj() {
         return pj.get();
     }
@@ -139,7 +129,6 @@ public class EquipoDTO {
         return pj;
     }
 
-    /* ========================== GANADOS ========================== */
     public int getG() {
         return g.get();
     }
@@ -152,7 +141,6 @@ public class EquipoDTO {
         return g;
     }
 
-    /* ========================== EMPATADOS ========================== */
     public int getE() {
         return e.get();
     }
@@ -165,7 +153,6 @@ public class EquipoDTO {
         return e;
     }
 
-    /* ========================== PERDIDOS ========================== */
     public int getP() {
         return p.get();
     }
@@ -178,7 +165,6 @@ public class EquipoDTO {
         return p;
     }
 
-    /* ========================== GOLES A FAVOR ========================== */
     public int getGf() {
         return gf.get();
     }
@@ -191,7 +177,6 @@ public class EquipoDTO {
         return gf;
     }
 
-    /* ========================== GOLES EN CONTRA ========================== */
     public int getGc() {
         return gc.get();
     }
@@ -204,7 +189,6 @@ public class EquipoDTO {
         return gc;
     }
 
-    /* ========================== DIFERENCIA DE GOLES ========================== */
     public int getDg() {
         return dg.get();
     }
@@ -217,7 +201,6 @@ public class EquipoDTO {
         return dg;
     }
 
-    /* ========================== PUNTOS ========================== */
     public int getPts() {
         return pts.get();
     }

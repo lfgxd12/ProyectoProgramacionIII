@@ -14,7 +14,207 @@ import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
+public class EquipoDatos {
+
+    public EquipoDatos() {}
+
+    public int insertar(EquipoDTO equipo) {
+
+        String sql = "INSERT INTO equipo " +
+                "(codigo, nombre, ciudad, estadio, anio_fundacion, pj, g, e, p, gf, gc, dg, pts, activo) " +
+                "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+        try (Connection con = ConectionFactory.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            ps.setString(1, equipo.getCodigo());
+            ps.setString(2, equipo.getNombre());
+            ps.setString(3, equipo.getCiudad());
+            ps.setString(4, equipo.getEstadio());
+            ps.setInt(5, equipo.getAnioFundacion());
+
+            ps.setInt(6, equipo.getPj());
+            ps.setInt(7, equipo.getG());
+            ps.setInt(8, equipo.getE());
+            ps.setInt(9, equipo.getP());
+            ps.setInt(10, equipo.getGf());
+            ps.setInt(11, equipo.getGc());
+            ps.setInt(12, equipo.getDg());
+            ps.setInt(13, equipo.getPts());
+
+            ps.setInt(14, equipo.isEliminado() ? 0 : 1);
+
+            ps.executeUpdate();
+
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) return rs.getInt(1);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("No se pudo insertar el equipo: " + e.getMessage(), e);
+        }
+
+        return -1;
+    }
+
+    public EquipoDTO obtenerEquipoPorId(int id) {
+
+        String sql = "SELECT * FROM equipo WHERE IdEquipo = ?";
+
+        try (Connection con = ConectionFactory.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, id);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return mapRowToDTO(rs);
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error obteniendo el equipo por id: " + e.getMessage(), e);
+        }
+
+        return null;
+    }
+
+    public boolean modificar(EquipoDTO equipo) {
+
+        String sql = "UPDATE equipo SET " +
+                "codigo=?, nombre=?, ciudad=?, estadio=?, anio_fundacion=?, " +
+                "pj=?, g=?, e=?, p=?, gf=?, gc=?, dg=?, pts=?, activo=? " +
+                "WHERE IdEquipo=?";
+
+        try (Connection con = ConectionFactory.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, equipo.getCodigo());
+            ps.setString(2, equipo.getNombre());
+            ps.setString(3, equipo.getCiudad());
+            ps.setString(4, equipo.getEstadio());
+            ps.setInt(5, equipo.getAnioFundacion());
+
+            ps.setInt(6, equipo.getPj());
+            ps.setInt(7, equipo.getG());
+            ps.setInt(8, equipo.getE());
+            ps.setInt(9, equipo.getP());
+            ps.setInt(10, equipo.getGf());
+            ps.setInt(11, equipo.getGc());
+            ps.setInt(12, equipo.getDg());
+            ps.setInt(13, equipo.getPts());
+
+            ps.setInt(14, equipo.isEliminado() ? 0 : 1);
+            ps.setInt(15, equipo.getIdEquipo());
+
+            return ps.executeUpdate() == 1;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("No se pudo modificar el equipo: " + e.getMessage(), e);
+        }
+    }
+
+    public boolean eliminar(int idEquipo) {
+
+        String sql = "UPDATE equipo SET activo = 0 WHERE IdEquipo = ?";
+
+        try (Connection con = ConectionFactory.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, idEquipo);
+            return ps.executeUpdate() == 1;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("No se pudo eliminar (inactivar) el equipo: " + e.getMessage(), e);
+        }
+    }
+
+    public List<EquipoDTO> listaEquipoActivos() {
+
+        String sql = "SELECT * FROM equipo WHERE activo = 1";
+        List<EquipoDTO> listaEquipo = new ArrayList<>();
+
+        try (Connection con = ConectionFactory.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                listaEquipo.add(mapRowToDTO(rs));
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error listando los equipos activos: " + e.getMessage(), e);
+        }
+
+        return listaEquipo;
+    }
+
+    private EquipoDTO mapRowToDTO(ResultSet rs) throws SQLException {
+        EquipoDTO dto = new EquipoDTO();
+        dto.setIdEquipo(rs.getInt("IdEquipo"));
+        dto.setCodigo(rs.getString("codigo"));
+        dto.setNombre(rs.getString("nombre"));
+        dto.setCiudad(rs.getString("ciudad"));
+        dto.setEstadio(rs.getString("estadio"));
+        dto.setAnioFundacion(rs.getInt("anio_fundacion"));
+
+        dto.setPj(rs.getInt("pj"));
+        dto.setG(rs.getInt("g"));
+        dto.setE(rs.getInt("e"));
+        dto.setP(rs.getInt("p"));
+        dto.setGf(rs.getInt("gf"));
+        dto.setGc(rs.getInt("gc"));
+        dto.setDg(rs.getInt("dg"));
+        dto.setPts(rs.getInt("pts"));
+
+        dto.setEliminado(rs.getInt("activo") == 0);
+        return dto;
+    }
+
+    public EquipoDTO obtenerEquipoPorCodigo(String codigo) {
+
+        String sql = "SELECT * FROM equipo WHERE codigo = ?";
+
+        try (Connection con = ConectionFactory.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, codigo);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    EquipoDTO dto = new EquipoDTO();
+                    dto.setIdEquipo(rs.getInt("IdEquipo"));
+                    dto.setCodigo(rs.getString("codigo"));
+                    dto.setNombre(rs.getString("nombre"));
+                    dto.setCiudad(rs.getString("ciudad"));
+                    dto.setEstadio(rs.getString("estadio"));
+                    dto.setAnioFundacion(rs.getInt("anio_fundacion"));
+                    dto.setPj(rs.getInt("pj"));
+                    dto.setG(rs.getInt("g"));
+                    dto.setE(rs.getInt("e"));
+                    dto.setP(rs.getInt("p"));
+                    dto.setGf(rs.getInt("gf"));
+                    dto.setGc(rs.getInt("gc"));
+                    dto.setDg(rs.getInt("dg"));
+                    dto.setPts(rs.getInt("pts"));
+                    dto.setEliminado(rs.getInt("activo") == 0);
+                    return dto;
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error obteniendo equipo por codigo: " + e.getMessage());
+        }
+
+        return null;
+    }
+}
+
+/*
 public class EquipoDatos {
 
     private final Path rutaArchivo;
@@ -58,7 +258,6 @@ public class EquipoDatos {
             int anioFundacion = parseInt(getText(e, "anioFundacion"), 0);
             boolean eliminado = parseBoolean(getText(e, "eliminado"), false);
 
-            // Estadísticas
             int pj = parseInt(getText(e, "pj"), 0);
             int g = parseInt(getText(e, "g"), 0);
             int empates = parseInt(getText(e, "e"), 0);
@@ -85,7 +284,6 @@ public class EquipoDatos {
         return equipos;
     }
 
-
     public void guardar(List<EquipoDTO> equipos) throws Exception {
         if (rutaArchivo.getParent() != null) {
             Files.createDirectories(rutaArchivo.getParent());
@@ -109,7 +307,6 @@ public class EquipoDatos {
             append(doc, equipo, "estadio", nullToEmpty(eq.getEstadio()));
             append(doc, equipo, "anioFundacion", String.valueOf(eq.getAnioFundacion()));
             append(doc, equipo, "eliminado", String.valueOf(eq.isEliminado()));
-
 
             append(doc, equipo, "pj", String.valueOf(eq.getPj()));
             append(doc, equipo, "g", String.valueOf(eq.getG()));
@@ -167,3 +364,4 @@ public class EquipoDatos {
     }
 }
 
+ */
