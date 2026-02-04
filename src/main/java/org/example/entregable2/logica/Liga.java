@@ -42,9 +42,7 @@ public class Liga {
             return false;
         }
 
-
         equipo.setEliminado(true);
-
 
         equipo.setNombre(equipo.getNombre());
 
@@ -65,7 +63,6 @@ public class Liga {
         calendario.clear();
         partidosPorJornada.clear();
         contadorPartidos = 1;
-
 
         List<Equipo> equiposCalendario = new ArrayList<>(
             equipos.obtenerTodos().stream()
@@ -167,10 +164,8 @@ public class Liga {
             throw new IllegalStateException("Este partido ya tiene un resultado registrado");
         }
 
-        // Registra resultado en el partido
         partido.registrarResultado(golesLocal, golesVisitante);
 
-        // Actualiza estadísticas de los equipos
         partido.getLocal().aplicarResultado(golesLocal, golesVisitante);
         partido.getVisitante().aplicarResultado(golesVisitante, golesLocal);
 
@@ -228,6 +223,122 @@ public class Liga {
 
     public Map<Integer, List<Partido>> getPartidosPorJornada() {
         return new HashMap<>(partidosPorJornada);
+    }
+
+    public void cargarPartidosDesdeDTO(List<org.example.entregable2.dto.PartidoDTO> partidosDTO) {
+        calendario.clear();
+        partidosPorJornada.clear();
+
+        int maxId = 0;
+
+        for (org.example.entregable2.dto.PartidoDTO dto : partidosDTO) {
+            Equipo local = buscarEquipoPorCodigo(dto.getEquipoLocalCodigo());
+            Equipo visitante = buscarEquipoPorCodigo(dto.getEquipoVisitanteCodigo());
+
+            if (local != null && visitante != null) {
+                Partido partido = new Partido(local, visitante, dto.getFecha(), dto.getJornada());
+                partido.setId(dto.getId());
+
+                if (dto.isTieneResultado()) {
+                    partido.registrarResultado(dto.getGolesLocal(), dto.getGolesVisitante());
+                    local.aplicarResultado(dto.getGolesLocal(), dto.getGolesVisitante());
+                    visitante.aplicarResultado(dto.getGolesVisitante(), dto.getGolesLocal());
+                }
+
+                calendario.add(partido);
+                partidosPorJornada.computeIfAbsent(partido.getJornada(), k -> new ArrayList<>()).add(partido);
+
+                if (dto.getId() > maxId) {
+                    maxId = dto.getId();
+                }
+            }
+        }
+
+        contadorPartidos = maxId + 1;
+    }
+
+    public int calcularTotalJornadas() {
+        List<Equipo> equiposActivos = equipos.obtenerTodos().stream()
+            .filter(e -> !e.isEliminado())
+            .collect(Collectors.toList());
+
+        int numEquipos = equiposActivos.size();
+        if (numEquipos < 2) return 0;
+
+        boolean esImpar = numEquipos % 2 != 0;
+        if (esImpar) numEquipos++;
+
+        return (numEquipos - 1) * 2;
+    }
+
+    public int contarJornadasJugadas() {
+        int maxJornada = 0;
+        for (Partido p : calendario) {
+            if (p.tieneResultado() && p.getJornada() > maxJornada) {
+                maxJornada = p.getJornada();
+            }
+        }
+        return maxJornada;
+    }
+
+    public int contarJornadasPendientes() {
+        if (calendario.isEmpty()) return 0;
+
+        int total = partidosPorJornada.keySet().stream()
+            .max(Integer::compare)
+            .orElse(0);
+
+        int jugadas = contarJornadasJugadas();
+        return total - jugadas;
+    }
+
+    public boolean puedeSimularJornadas() {
+        return !calendario.isEmpty() && contarJornadasPendientes() > 0;
+    }
+
+    public void simularJornada() {
+        if (!puedeSimularJornadas()) {
+            throw new IllegalStateException("No hay jornadas disponibles para simular");
+        }
+
+        int jornadaActual = contarJornadasJugadas() + 1;
+        List<Partido> partidosJornada = partidosPorJornada.get(jornadaActual);
+
+        if (partidosJornada == null || partidosJornada.isEmpty()) {
+            throw new IllegalStateException("No hay partidos para la jornada " + jornadaActual);
+        }
+
+        for (Partido partido : partidosJornada) {
+            if (!partido.tieneResultado() &&
+                !partido.getLocal().isEliminado() &&
+                !partido.getVisitante().isEliminado()) {
+
+                int golesLocal = (int) (Math.random() * 5);
+                int golesVisitante = (int) (Math.random() * 5);
+
+                registrarResultadoPartido(partido.getId(), golesLocal, golesVisitante);
+            }
+        }
+    }
+
+    public void simularVariasJornadas(int cantidad) {
+        if (cantidad <= 0) {
+            throw new IllegalArgumentException("La cantidad debe ser mayor a 0");
+        }
+
+        int jornadasDisponibles = contarJornadasPendientes();
+        if (cantidad > jornadasDisponibles) {
+            throw new IllegalArgumentException(
+                "Solo hay " + jornadasDisponibles + " jornadas disponibles para simular");
+        }
+
+        for (int i = 0; i < cantidad; i++) {
+            simularJornada();
+        }
+    }
+
+    public List<Equipo> getTodosLosEquipos() {
+        return equipos.obtenerTodos();
     }
 }
 

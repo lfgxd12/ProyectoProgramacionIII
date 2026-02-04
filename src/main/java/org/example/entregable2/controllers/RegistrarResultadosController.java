@@ -148,6 +148,12 @@ public class RegistrarResultadosController {
 
             liga.registrarResultadoPartido(partido.getId(), golesLocal, golesVisitante);
 
+            try {
+                org.example.entregable2.servicios.PersistenciaService.getInstance().guardarLiga(liga);
+            } catch (Exception ex) {
+                System.err.println("Error al guardar datos: " + ex.getMessage());
+            }
+
             mostrarAlerta(AlertType.INFORMATION, "Éxito",
                 "Resultado registrado correctamente\n" +
                 partido.getLocal().getNombre() + " " + golesLocal + " - " +

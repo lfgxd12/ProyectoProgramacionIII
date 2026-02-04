@@ -37,7 +37,6 @@ public class RegistrarEquipoController {
 
     @FXML
     public void initialize() {
-        // Revisar la logica
     }
 
     private boolean validarDatos() {
@@ -98,6 +97,12 @@ public class RegistrarEquipoController {
             Equipo equipo = new Equipo(nombre, ciudad, codigo);
 
             liga.registrarEquipo(equipo);
+
+            try {
+                org.example.entregable2.servicios.PersistenciaService.getInstance().guardarLiga(liga);
+            } catch (Exception ex) {
+                System.err.println("Error al guardar datos: " + ex.getMessage());
+            }
 
             mostrarAlerta(AlertType.INFORMATION, "Éxito",
                 "Equipo registrado correctamente");

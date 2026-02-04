@@ -1,5 +1,7 @@
 package org.example.entregable2.logica;
 
+import org.example.entregable2.dto.EquipoDTO;
+
 public class Equipo {
     private String nombre;
     private String ciudad;
@@ -70,7 +72,6 @@ public class Equipo {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
 
     public String getCiudad() {
         return ciudad;
@@ -150,6 +151,39 @@ public class Equipo {
             return nombre + " (Equipo Borrado)";
         }
         return nombre + " (" + codigo + ")";
+    }
+
+    public EquipoDTO toDTO() {
+        EquipoDTO dto = new EquipoDTO(0, codigo, nombre, ciudad, estadio,
+            annioFundacion != null ? Integer.parseInt(annioFundacion) : 0);
+        dto.setEliminado(eliminado);
+        dto.setPj(pj);
+        dto.setG(g);
+        dto.setE(e);
+        dto.setP(p);
+        dto.setGf(gf);
+        dto.setGc(gc);
+        dto.setDg(dg);
+        dto.setPts(pts);
+        return dto;
+    }
+
+    public static Equipo fromDTO(EquipoDTO dto) {
+        Equipo equipo = new Equipo(dto.getNombre(), dto.getCiudad(), dto.getCodigo());
+        equipo.setEstadio(dto.getEstadio());
+        equipo.setAnnioFundacion(String.valueOf(dto.getAnioFundacion()));
+        equipo.setEliminado(dto.isEliminado());
+
+        equipo.pj = dto.getPj();
+        equipo.g = dto.getG();
+        equipo.e = dto.getE();
+        equipo.p = dto.getP();
+        equipo.gf = dto.getGf();
+        equipo.gc = dto.getGc();
+        equipo.dg = dto.getDg();
+        equipo.pts = dto.getPts();
+
+        return equipo;
     }
 }
 

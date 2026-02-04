@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<partidos>
+  <partido>
+    <id>1</id>
+    <jornada>1</jornada>
+    <fecha>2026-01-20</fecha>
+    <equipoLocalCodigo>LDA</equipoLocalCodigo>
+    <equipoVisitanteCodigo>SAP</equipoVisitanteCodigo>
+    <golesLocal>3</golesLocal>
+    <golesVisitante>2</golesVisitante>
+  </partido>
+  <partido>
+    <id>2</id>
+    <jornada>2</jornada>
+    <fecha>2026-01-20</fecha>
+    <equipoLocalCodigo>SAP</equipoLocalCodigo>
+    <equipoVisitanteCodigo>LDA</equipoVisitanteCodigo>
+    <golesLocal>1</golesLocal>
+    <golesVisitante>4</golesVisitante>
+  </partido>
+</partidos>

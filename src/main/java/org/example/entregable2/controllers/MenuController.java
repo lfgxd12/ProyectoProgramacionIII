@@ -7,7 +7,6 @@ import org.example.entregable2.servicios.NavigationService;
 
 public class MenuController {
 
-
     @FXML
     private Button btnListaEquipos;
 
@@ -22,6 +21,12 @@ public class MenuController {
 
     @FXML
     private Button btbMostrarTablaDePosiciones;
+
+    @FXML
+    private Button btnSimularJornada;
+
+    @FXML
+    private Button btnSimulacion;
 
     @FXML
     private Button btnSalir2;
@@ -39,9 +44,14 @@ public class MenuController {
         btbListarCalendarioPorJornada.setOnAction(event -> onListarCalendarioClick());
         btnRegistrarResultados.setOnAction(event -> onRegistrarResultadosClick());
         btbMostrarTablaDePosiciones.setOnAction(event -> onMostrarTablaClick());
+        if (btnSimularJornada != null) {
+            btnSimularJornada.setOnAction(event -> onSimularJornadaClick());
+        }
+        if (btnSimulacion != null) {
+            btnSimulacion.setOnAction(event -> onSimulacionClick());
+        }
         btnSalir2.setOnAction(event -> onSalirClick());
     }
-
 
     @FXML
     public void onListaEquiposClick() {
@@ -66,6 +76,16 @@ public class MenuController {
     @FXML
     public void onMostrarTablaClick() {
         NavigationService.getInstance().mostrarTablaPosiciones();
+    }
+
+    @FXML
+    public void onSimularJornadaClick() {
+        NavigationService.getInstance().mostrarSimulacion();
+    }
+
+    @FXML
+    public void onSimulacionClick() {
+        NavigationService.getInstance().mostrarSimulacion();
     }
 
     @FXML

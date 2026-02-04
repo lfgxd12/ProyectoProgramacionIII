@@ -84,11 +84,16 @@ public class GenerarCalendarioController {
                     return;
                 }
 
-                // Reiniciar temporada completa
                 liga.reiniciarTemporada();
             }
 
             liga.generarCalendario(idaVuelta);
+
+            try {
+                org.example.entregable2.servicios.PersistenciaService.getInstance().guardarLiga(liga);
+            } catch (Exception ex) {
+                System.err.println("Error al guardar datos: " + ex.getMessage());
+            }
 
             if (lblResultado != null) {
                 String tipo = idaVuelta ? "ida y vuelta" : "solo ida";
@@ -103,7 +108,6 @@ public class GenerarCalendarioController {
         }
 
     }
-
 
     @FXML
     public void onCancelarClick() {
