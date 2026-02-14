@@ -1,4 +1,8 @@
 C:\Users\lfgxd\OneDrive\Escritorio\Proyecto P3 AActual\Proyecto P3 AActual\Proyecto P3 Actualizado\ProyectoProgramacionIII\src\main\java\module-info.java
+C:\Users\lfgxd\OneDrive\Escritorio\Proyecto P3 AActual\Proyecto P3 AActual\Proyecto P3 Actualizado\ProyectoProgramacionIII\src\main\java\org\example\entregable2\client\EquipoServiceClientSocket.java
+C:\Users\lfgxd\OneDrive\Escritorio\Proyecto P3 AActual\Proyecto P3 AActual\Proyecto P3 Actualizado\ProyectoProgramacionIII\src\main\java\org\example\entregable2\client\JornadaServiceClientSocket.java
+C:\Users\lfgxd\OneDrive\Escritorio\Proyecto P3 AActual\Proyecto P3 AActual\Proyecto P3 Actualizado\ProyectoProgramacionIII\src\main\java\org\example\entregable2\client\PartidoServiceClientSocket.java
+C:\Users\lfgxd\OneDrive\Escritorio\Proyecto P3 AActual\Proyecto P3 AActual\Proyecto P3 Actualizado\ProyectoProgramacionIII\src\main\java\org\example\entregable2\client\TemporadaServiceClientSocket.java
 C:\Users\lfgxd\OneDrive\Escritorio\Proyecto P3 AActual\Proyecto P3 AActual\Proyecto P3 Actualizado\ProyectoProgramacionIII\src\main\java\org\example\entregable2\controllers\CalendarioController.java
 C:\Users\lfgxd\OneDrive\Escritorio\Proyecto P3 AActual\Proyecto P3 AActual\Proyecto P3 Actualizado\ProyectoProgramacionIII\src\main\java\org\example\entregable2\controllers\EquiposController.java
 C:\Users\lfgxd\OneDrive\Escritorio\Proyecto P3 AActual\Proyecto P3 AActual\Proyecto P3 Actualizado\ProyectoProgramacionIII\src\main\java\org\example\entregable2\controllers\GenerarCalendarioController.java
@@ -24,7 +28,17 @@ C:\Users\lfgxd\OneDrive\Escritorio\Proyecto P3 AActual\Proyecto P3 AActual\Proye
 C:\Users\lfgxd\OneDrive\Escritorio\Proyecto P3 AActual\Proyecto P3 AActual\Proyecto P3 Actualizado\ProyectoProgramacionIII\src\main\java\org\example\entregable2\HelloApplication.java
 C:\Users\lfgxd\OneDrive\Escritorio\Proyecto P3 AActual\Proyecto P3 AActual\Proyecto P3 Actualizado\ProyectoProgramacionIII\src\main\java\org\example\entregable2\Launcher.java
 C:\Users\lfgxd\OneDrive\Escritorio\Proyecto P3 AActual\Proyecto P3 AActual\Proyecto P3 Actualizado\ProyectoProgramacionIII\src\main\java\org\example\entregable2\logica\Equipo.java
+C:\Users\lfgxd\OneDrive\Escritorio\Proyecto P3 AActual\Proyecto P3 AActual\Proyecto P3 Actualizado\ProyectoProgramacionIII\src\main\java\org\example\entregable2\logica\EquipoLogica.java
+C:\Users\lfgxd\OneDrive\Escritorio\Proyecto P3 AActual\Proyecto P3 AActual\Proyecto P3 Actualizado\ProyectoProgramacionIII\src\main\java\org\example\entregable2\logica\JornadaLogica.java
 C:\Users\lfgxd\OneDrive\Escritorio\Proyecto P3 AActual\Proyecto P3 AActual\Proyecto P3 Actualizado\ProyectoProgramacionIII\src\main\java\org\example\entregable2\logica\Liga.java
 C:\Users\lfgxd\OneDrive\Escritorio\Proyecto P3 AActual\Proyecto P3 AActual\Proyecto P3 Actualizado\ProyectoProgramacionIII\src\main\java\org\example\entregable2\logica\Partido.java
+C:\Users\lfgxd\OneDrive\Escritorio\Proyecto P3 AActual\Proyecto P3 AActual\Proyecto P3 Actualizado\ProyectoProgramacionIII\src\main\java\org\example\entregable2\logica\PartidoLogica.java
+C:\Users\lfgxd\OneDrive\Escritorio\Proyecto P3 AActual\Proyecto P3 AActual\Proyecto P3 Actualizado\ProyectoProgramacionIII\src\main\java\org\example\entregable2\logica\TemporadaLogica.java
+C:\Users\lfgxd\OneDrive\Escritorio\Proyecto P3 AActual\Proyecto P3 AActual\Proyecto P3 Actualizado\ProyectoProgramacionIII\src\main\java\org\example\entregable2\servicios\ClientHandler.java
+C:\Users\lfgxd\OneDrive\Escritorio\Proyecto P3 AActual\Proyecto P3 AActual\Proyecto P3 Actualizado\ProyectoProgramacionIII\src\main\java\org\example\entregable2\servicios\EquipoService.java
+C:\Users\lfgxd\OneDrive\Escritorio\Proyecto P3 AActual\Proyecto P3 AActual\Proyecto P3 Actualizado\ProyectoProgramacionIII\src\main\java\org\example\entregable2\servicios\JornadaService.java
 C:\Users\lfgxd\OneDrive\Escritorio\Proyecto P3 AActual\Proyecto P3 AActual\Proyecto P3 Actualizado\ProyectoProgramacionIII\src\main\java\org\example\entregable2\servicios\NavigationService.java
+C:\Users\lfgxd\OneDrive\Escritorio\Proyecto P3 AActual\Proyecto P3 AActual\Proyecto P3 Actualizado\ProyectoProgramacionIII\src\main\java\org\example\entregable2\servicios\PartidoService.java
 C:\Users\lfgxd\OneDrive\Escritorio\Proyecto P3 AActual\Proyecto P3 AActual\Proyecto P3 Actualizado\ProyectoProgramacionIII\src\main\java\org\example\entregable2\servicios\PersistenciaService.java
+C:\Users\lfgxd\OneDrive\Escritorio\Proyecto P3 AActual\Proyecto P3 AActual\Proyecto P3 Actualizado\ProyectoProgramacionIII\src\main\java\org\example\entregable2\servicios\PremierLeagueServer.java
+C:\Users\lfgxd\OneDrive\Escritorio\Proyecto P3 AActual\Proyecto P3 AActual\Proyecto P3 Actualizado\ProyectoProgramacionIII\src\main\java\org\example\entregable2\servicios\TemporadaService.java

@@ -20,7 +20,6 @@ public class HelloApplication extends Application {
         try {
             if (persistenciaService.existenDatos()) {
                 liga = persistenciaService.cargarLiga("Premier League");
-                System.out.println("Datos cargados correctamente desde XML");
             } else {
                 liga = new Liga("Premier League");
                 System.out.println("Se creó una nueva liga");

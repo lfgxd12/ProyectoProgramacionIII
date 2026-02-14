@@ -5,8 +5,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import org.example.entregable2.dto.EquipoDTO;
 import org.example.entregable2.logica.Equipo;
 import org.example.entregable2.logica.Liga;
+import org.example.entregable2.servicios.EquipoService;
 
 public class RegistrarEquipoController {
 
@@ -34,6 +36,7 @@ public class RegistrarEquipoController {
     private Button btnVolver;
 
     private Liga liga;
+    private final EquipoService equipoService = new EquipoService();
 
     @FXML
     public void initialize() {
@@ -81,11 +84,6 @@ public class RegistrarEquipoController {
     @FXML
     public void onGuardarClick() {
         try {
-            if (liga == null) {
-                mostrarAlerta(AlertType.ERROR, "Error", "No hay liga configurada");
-                return;
-            }
-
             if (!validarDatos()) {
                 return;
             }
@@ -93,27 +91,51 @@ public class RegistrarEquipoController {
             String nombre = txtNombreEquipo.getText().trim();
             String ciudad = txtCiudad.getText().trim();
             String codigo = txtCodigo.getText().trim().toUpperCase();
+            String estadio = txtNombreEstadio.getText().trim();
+            int anioFundacion = Integer.parseInt(txtAnioFundacion.getText().trim());
 
-            Equipo equipo = new Equipo(nombre, ciudad, codigo);
+            EquipoDTO equipoDTO = new EquipoDTO();
+            equipoDTO.setCodigo(codigo);
+            equipoDTO.setNombre(nombre);
+            equipoDTO.setCiudad(ciudad);
+            equipoDTO.setEstadio(estadio);
+            equipoDTO.setAnioFundacion(anioFundacion);
 
-            liga.registrarEquipo(equipo);
+            btnGuardar.setDisable(true);
 
-            try {
-                org.example.entregable2.servicios.PersistenciaService.getInstance().guardarLiga(liga);
-            } catch (Exception ex) {
-                System.err.println("Error al guardar datos: " + ex.getMessage());
-            }
+            equipoService.crearEquipoAsync(
+                equipoDTO,
+                idGenerado -> {
+                    btnGuardar.setDisable(false);
 
-            mostrarAlerta(AlertType.INFORMATION, "Éxito",
-                "Equipo registrado correctamente");
+                    if (liga != null) {
+                        equipoDTO.setIdEquipo(idGenerado);
+                        Equipo equipo = Equipo.fromDTO(equipoDTO);
+                        liga.registrarEquipo(equipo);
 
-            onLimpiarCamposClick();
+                        try {
+                            org.example.entregable2.servicios.PersistenciaService.getInstance().guardarLiga(liga);
+                        } catch (Exception ex) {
+                            System.err.println("Error al guardar datos: " + ex.getMessage());
+                        }
+                    }
 
-        } catch (IllegalArgumentException e) {
-            mostrarAlerta(AlertType.ERROR, "Error", e.getMessage());
+                    mostrarAlerta(AlertType.INFORMATION, "Éxito",
+                        "Equipo registrado correctamente con ID: " + idGenerado);
+                    onLimpiarCamposClick();
+                },
+                error -> {
+                    btnGuardar.setDisable(false);
+                    mostrarAlerta(AlertType.ERROR, "Error",
+                        "Error al registrar el equipo: " + error.getMessage());
+                }
+            );
+
+        } catch (NumberFormatException e) {
+            mostrarAlerta(AlertType.ERROR, "Error", "El año de fundación debe ser un número válido");
         } catch (Exception e) {
             mostrarAlerta(AlertType.ERROR, "Error",
-                "Error inesperado al registrar el equipo: " + e.getMessage());
+                "Error inesperado: " + e.getMessage());
         }
     }
 

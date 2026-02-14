@@ -6,8 +6,14 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.collections.FXCollections;
+import org.example.entregable2.dto.PartidoDTO;
 import org.example.entregable2.logica.Liga;
-import org.example.entregable2.logica.Partido;
+import org.example.entregable2.servicios.PartidoService;
+import org.example.entregable2.servicios.TemporadaService;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class RegistrarResultadosController {
 
@@ -15,10 +21,10 @@ public class RegistrarResultadosController {
     private ListView<Integer> tbJornada;
 
     @FXML
-    private ListView<Partido> tbLocal;
+    private ListView<PartidoDTO> tbLocal;
 
     @FXML
-    private ListView<Partido> tbVisita;
+    private ListView<PartidoDTO> tbVisita;
 
     @FXML
     private TextField txtGolesL;
@@ -33,12 +39,15 @@ public class RegistrarResultadosController {
     private Button btnVolver;
 
     private Liga liga;
-    private Partido partidoSeleccionado;
+    private PartidoDTO partidoSeleccionado;
+    private final PartidoService partidoService = new PartidoService();
+    private final TemporadaService temporadaService = new TemporadaService();
+    private int idTemporadaActual = -1;
 
     @FXML
     public void initialize() {
         configurarEventos();
-        cargarJornadas();
+        cargarTemporadaActiva();
     }
 
     private void configurarEventos() {
@@ -49,6 +58,32 @@ public class RegistrarResultadosController {
         if (tbLocal != null) {
             tbLocal.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> onPartidoSeleccionado());
+
+            // Personalizar cómo se muestran los partidos
+            tbLocal.setCellFactory(param -> new javafx.scene.control.ListCell<>() {
+                @Override
+                protected void updateItem(PartidoDTO partido, boolean empty) {
+                    super.updateItem(partido, empty);
+                    if (empty || partido == null) {
+                        setText(null);
+                    } else {
+                        setText(partido.getEquipoLocalCodigo());
+                    }
+                }
+            });
+        }
+        if (tbVisita != null) {
+            tbVisita.setCellFactory(param -> new javafx.scene.control.ListCell<>() {
+                @Override
+                protected void updateItem(PartidoDTO partido, boolean empty) {
+                    super.updateItem(partido, empty);
+                    if (empty || partido == null) {
+                        setText(null);
+                    } else {
+                        setText(partido.getEquipoVisitanteCodigo());
+                    }
+                }
+            });
         }
         if (btnRegistrar != null) {
             btnRegistrar.setOnAction(event -> onRegistrarResultado());
@@ -58,28 +93,64 @@ public class RegistrarResultadosController {
         }
     }
 
+    private void cargarTemporadaActiva() {
+        temporadaService.obtenerTemporadaActivaAsync(
+            temporada -> {
+                if (temporada != null) {
+                    idTemporadaActual = temporada.getIdTemporada();
+                    cargarJornadas();
+                }
+            },
+            error -> {
+                mostrarAlerta(AlertType.WARNING, "Advertencia",
+                    "No se pudo cargar la temporada activa: " + error.getMessage());
+            }
+        );
+    }
+
     private void cargarJornadas() {
-        if (liga != null) {
-            java.util.Map<Integer, java.util.List<Partido>> partidosPorJornada = liga.getPartidosPorJornada();
-            javafx.collections.ObservableList<Integer> jornadas =
-                javafx.collections.FXCollections.observableArrayList(partidosPorJornada.keySet());
-            tbJornada.setItems(jornadas.sorted());
+        if (idTemporadaActual > 0) {
+            partidoService.listarPorTemporadaAsync(
+                idTemporadaActual,
+                partidos -> {
+                    // Extraer jornadas únicas
+                    List<Integer> jornadas = partidos.stream()
+                        .map(PartidoDTO::getJornada)
+                        .distinct()
+                        .sorted()
+                        .collect(Collectors.toList());
+
+                    tbJornada.setItems(FXCollections.observableArrayList(jornadas));
+                },
+                error -> {
+                    mostrarAlerta(AlertType.ERROR, "Error",
+                        "Error al cargar jornadas: " + error.getMessage());
+                }
+            );
         }
     }
 
     @FXML
     public void onJornadaSeleccionada() {
         Integer jornadaSeleccionada = tbJornada.getSelectionModel().getSelectedItem();
-        if (jornadaSeleccionada != null && liga != null) {
-            java.util.List<Partido> partidos = liga.listarPartidosPorJornada(jornadaSeleccionada);
-            java.util.List<Partido> partidosPendientes = partidos.stream()
-                .filter(p -> !p.tieneResultado())
-                .filter(p -> !p.getLocal().isEliminado() && !p.getVisitante().isEliminado())
-                .collect(java.util.stream.Collectors.toList());
-            javafx.collections.ObservableList<Partido> partidosObservable =
-                javafx.collections.FXCollections.observableArrayList(partidosPendientes);
-            tbLocal.setItems(partidosObservable);
-            tbVisita.setItems(partidosObservable);
+        if (jornadaSeleccionada != null && idTemporadaActual > 0) {
+            partidoService.listarPorJornadaAsync(
+                idTemporadaActual,
+                jornadaSeleccionada,
+                partidos -> {
+                    // Filtrar solo partidos pendientes
+                    List<PartidoDTO> partidosPendientes = partidos.stream()
+                        .filter(p -> "PENDIENTE".equals(p.getEstado()))
+                        .collect(Collectors.toList());
+
+                    tbLocal.setItems(FXCollections.observableArrayList(partidosPendientes));
+                    tbVisita.setItems(FXCollections.observableArrayList(partidosPendientes));
+                },
+                error -> {
+                    mostrarAlerta(AlertType.ERROR, "Error",
+                        "Error al cargar partidos: " + error.getMessage());
+                }
+            );
         }
     }
 
@@ -133,42 +204,34 @@ public class RegistrarResultadosController {
             int golesLocal = Integer.parseInt(txtGolesL.getText().trim());
             int golesVisitante = Integer.parseInt(txtGolesV.getText().trim());
 
-            Partido partido = liga.obtenerPartidoPorId(partidoSeleccionado.getId());
+            btnRegistrar.setDisable(true);
 
-            if (partido == null) {
-                mostrarAlerta(AlertType.ERROR, "Error", "Partido no encontrado");
-                return;
-            }
+            partidoService.registrarResultadoAsync(
+                partidoSeleccionado.getId(),
+                golesLocal,
+                golesVisitante,
+                () -> {
+                    btnRegistrar.setDisable(false);
 
-            if (partido.tieneResultado()) {
-                mostrarAlerta(AlertType.ERROR, "Error",
-                    "Este partido ya tiene un resultado registrado");
-                return;
-            }
+                    mostrarAlerta(AlertType.INFORMATION, "Éxito",
+                        "Resultado registrado correctamente\n" +
+                        partidoSeleccionado.getEquipoLocalCodigo() + " " + golesLocal + " - " +
+                        golesVisitante + " " + partidoSeleccionado.getEquipoVisitanteCodigo());
 
-            liga.registrarResultadoPartido(partido.getId(), golesLocal, golesVisitante);
+                    txtGolesL.clear();
+                    txtGolesV.clear();
+                    partidoSeleccionado = null;
+                    onJornadaSeleccionada();
+                },
+                error -> {
+                    btnRegistrar.setDisable(false);
+                    mostrarAlerta(AlertType.ERROR, "Error",
+                        "Error al registrar resultado: " + error.getMessage());
+                }
+            );
 
-            try {
-                org.example.entregable2.servicios.PersistenciaService.getInstance().guardarLiga(liga);
-            } catch (Exception ex) {
-                System.err.println("Error al guardar datos: " + ex.getMessage());
-            }
-
-            mostrarAlerta(AlertType.INFORMATION, "Éxito",
-                "Resultado registrado correctamente\n" +
-                partido.getLocal().getNombre() + " " + golesLocal + " - " +
-                golesVisitante + " " + partido.getVisitante().getNombre());
-
-            txtGolesL.clear();
-            txtGolesV.clear();
-            partidoSeleccionado = null;
-            cargarJornadas();
-            onJornadaSeleccionada();
-
-        } catch (IllegalArgumentException e) {
-            mostrarAlerta(AlertType.ERROR, "Error", e.getMessage());
-        } catch (IllegalStateException e) {
-            mostrarAlerta(AlertType.ERROR, "Error", e.getMessage());
+        } catch (NumberFormatException e) {
+            mostrarAlerta(AlertType.ERROR, "Error", "Los goles deben ser números válidos");
         } catch (Exception e) {
             mostrarAlerta(AlertType.ERROR, "Error",
                 "Error inesperado al registrar el resultado: " + e.getMessage());
@@ -190,6 +253,6 @@ public class RegistrarResultadosController {
 
     public void setLiga(Liga liga) {
         this.liga = liga;
-        cargarJornadas();
+        cargarTemporadaActiva();
     }
 }

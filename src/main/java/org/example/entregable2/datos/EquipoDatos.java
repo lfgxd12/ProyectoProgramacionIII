@@ -20,6 +20,10 @@ import java.util.List;
 
 public class EquipoDatos {
 
+    private static final String SQL_UPDATE =
+            "UPDATE equipos SET nombre=?, ciudad=?, estadio=?, anio_fundacion=?, entrenador=?, activo=? " +
+                    "WHERE id_equipo=?";
+
     public EquipoDatos() {}
 
     public int insertar(EquipoDTO equipo) {
@@ -118,7 +122,7 @@ public class EquipoDatos {
         }
     }
 
-    public boolean eliminar(int idEquipo) {
+    public boolean  eliminar(int idEquipo) {
 
         String sql = "UPDATE equipo SET activo = 0 WHERE IdEquipo = ?";
 
@@ -212,6 +216,26 @@ public class EquipoDatos {
 
         return null;
     }
+
+    public boolean actualizar(EquipoDTO equipo) {
+        try (Connection con = ConectionFactory.getConnection();
+             PreparedStatement ps = con.prepareStatement(SQL_UPDATE)) {
+
+            ps.setString(1, equipo.getNombre());
+            ps.setString(2, equipo.getCiudad());
+            ps.setString(3, equipo.getEstadio());
+            ps.setInt(4, equipo.getAnioFundacion());
+            ps.setString(5, null);   // entrenador por ahora
+            ps.setBoolean(6, true);  // activo por ahora
+            ps.setInt(7, equipo.getIdEquipo());
+
+            return ps.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error actualizando equipo: " + e.getMessage(), e);
+        }
+    }
+
 }
 
 /*
