@@ -1,22 +1,11 @@
 package org.example.entregable2.datos;
 
 import org.example.entregable2.dto.EquipoDTO;
-import org.w3c.dom.*;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.*;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class EquipoDatos {
 
@@ -153,6 +142,27 @@ public class EquipoDatos {
         return listaEquipo;
     }
 
+    public List<EquipoDTO> listarActivos(){
+        String sql = "SELECT * FROM equipo WHERE activo = 1";
+        List<EquipoDTO> equipos = new ArrayList<>();
+
+        try (Connection con = ConectionFactory.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                equipos.add(mapRowToDTO(rs));
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error listando los equipos activos: " + e.getMessage(), e);
+        }
+
+        return equipos;
+    }
+
+
+
     private EquipoDTO mapRowToDTO(ResultSet rs) throws SQLException {
         EquipoDTO dto = new EquipoDTO();
         dto.setIdEquipo(rs.getInt("IdEquipo"));
@@ -212,6 +222,8 @@ public class EquipoDatos {
 
         return null;
     }
+
+
 }
 
 /*

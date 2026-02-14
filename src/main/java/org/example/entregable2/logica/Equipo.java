@@ -1,8 +1,8 @@
 package org.example.entregable2.logica;
-
 import org.example.entregable2.dto.EquipoDTO;
 
 public class Equipo {
+
     private String nombre;
     private String ciudad;
     private String codigo;
@@ -155,7 +155,7 @@ public class Equipo {
 
     public EquipoDTO toDTO() {
         EquipoDTO dto = new EquipoDTO(0, codigo, nombre, ciudad, estadio,
-            annioFundacion != null ? Integer.parseInt(annioFundacion) : 0);
+                annioFundacion != null ? Integer.parseInt(annioFundacion) : 0);
         dto.setEliminado(eliminado);
         dto.setPj(pj);
         dto.setG(g);
