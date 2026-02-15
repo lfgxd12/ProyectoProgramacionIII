@@ -6,6 +6,7 @@ org\example\entregable2\client\PartidoServiceClientSocket.class
 org\example\entregable2\controllers\ListaEquiposController.class
 org\example\entregable2\controllers\MenuController.class
 org\example\entregable2\dto\PartidoDTO.class
+org\example\entregable2\HelloApplication$1.class
 org\example\entregable2\servicios\ClientHandler.class
 org\example\entregable2\datos\ConectionFactory.class
 org\example\entregable2\server\PremierLeagueServer.class
