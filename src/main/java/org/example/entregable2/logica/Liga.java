@@ -203,6 +203,13 @@ public class Liga {
         contadorPartidos = 1;
     }
 
+    public void limpiarEquipos() {
+        this.equipos = new ListaEquipos();
+        this.calendario.clear();
+        this.partidosPorJornada.clear();
+        this.contadorPartidos = 1;
+    }
+
     public String getNombre() {
         return nombre;
     }

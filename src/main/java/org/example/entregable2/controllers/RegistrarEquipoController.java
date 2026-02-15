@@ -1,11 +1,14 @@
 package org.example.entregable2.controllers;
 
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import org.example.entregable2.dto.EquipoDTO;
 import org.example.entregable2.logica.Equipo;
+import org.example.entregable2.logica.EquipoLogica;
 import org.example.entregable2.logica.Liga;
 
 public class RegistrarEquipoController {
@@ -80,41 +83,81 @@ public class RegistrarEquipoController {
 
     @FXML
     public void onGuardarClick() {
-        try {
-            if (liga == null) {
-                mostrarAlerta(AlertType.ERROR, "Error", "No hay liga configurada");
-                return;
+        // Validar antes de iniciar la tarea asíncrona
+        if (!validarDatos()) {
+            return;
+        }
+
+        // Capturar valores de la UI en el hilo principal
+        final String nombre = txtNombreEquipo.getText().trim();
+        final String ciudad = txtCiudad.getText().trim();
+        final String codigo = txtCodigo.getText().trim().toUpperCase();
+        final String estadio = txtNombreEstadio.getText().trim();
+        final int anioFundacion = Integer.parseInt(txtAnioFundacion.getText().trim());
+
+        // Crear DTO para enviar al servidor
+        EquipoDTO dto = new EquipoDTO();
+        dto.setCodigo(codigo);
+        dto.setNombre(nombre);
+        dto.setCiudad(ciudad);
+        dto.setEstadio(estadio);
+        dto.setAnioFundacion(anioFundacion);
+
+        // Deshabilitar botón durante la operación
+        btnGuardar.setDisable(true);
+
+        // Crear tarea asíncrona para no bloquear la UI
+        Task<Integer> task = new Task<>() {
+            @Override
+            protected Integer call() throws Exception {
+                EquipoLogica logica = new EquipoLogica();
+                return logica.crearEquipo(dto);
             }
+        };
 
-            if (!validarDatos()) {
-                return;
-            }
+        // Manejar éxito
+        task.setOnSucceeded(event -> {
+            int idEquipo = task.getValue();
 
-            String nombre = txtNombreEquipo.getText().trim();
-            String ciudad = txtCiudad.getText().trim();
-            String codigo = txtCodigo.getText().trim().toUpperCase();
-
-            Equipo equipo = new Equipo(nombre, ciudad, codigo);
-
-            liga.registrarEquipo(equipo);
-
-            try {
-                org.example.entregable2.servicios.PersistenciaService.getInstance().guardarLiga(liga);
-            } catch (Exception ex) {
-                System.err.println("Error al guardar datos: " + ex.getMessage());
+            // Actualizar instancia local de Liga si existe
+            if (liga != null) {
+                try {
+                    Equipo equipoLocal = new Equipo(nombre, ciudad, codigo);
+                    equipoLocal.setEstadio(estadio);
+                    equipoLocal.setAnnioFundacion(String.valueOf(anioFundacion));
+                    liga.registrarEquipo(equipoLocal);
+                } catch (Exception e) {
+                    System.err.println("Advertencia: No se pudo actualizar Liga local: " + e.getMessage());
+                }
             }
 
             mostrarAlerta(AlertType.INFORMATION, "Éxito",
-                "Equipo registrado correctamente");
-
+                "Equipo registrado correctamente con ID: " + idEquipo);
             onLimpiarCamposClick();
+            btnGuardar.setDisable(false);
+        });
 
-        } catch (IllegalArgumentException e) {
-            mostrarAlerta(AlertType.ERROR, "Error", e.getMessage());
-        } catch (Exception e) {
-            mostrarAlerta(AlertType.ERROR, "Error",
-                "Error inesperado al registrar el equipo: " + e.getMessage());
-        }
+        // Manejar error
+        task.setOnFailed(event -> {
+            Throwable error = task.getException();
+            String mensaje = error.getMessage();
+
+            // Mensajes amigables
+            if (mensaje.contains("Ya existe")) {
+                mostrarAlerta(AlertType.WARNING, "Equipo Duplicado", mensaje);
+            } else if (mensaje.contains("Sin respuesta")) {
+                mostrarAlerta(AlertType.ERROR, "Error de Conexión",
+                    "No se pudo conectar con el servidor. Verifique que esté ejecutándose.");
+            } else {
+                mostrarAlerta(AlertType.ERROR, "Error",
+                    "Error al registrar el equipo: " + mensaje);
+            }
+
+            btnGuardar.setDisable(false);
+        });
+
+        // Ejecutar tarea en un nuevo hilo
+        new Thread(task).start();
     }
 
     @FXML
