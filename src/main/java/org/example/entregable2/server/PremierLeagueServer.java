@@ -5,7 +5,6 @@ import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-// Servidor TCP para gestión de la Premier League
 public class PremierLeagueServer {
 
     private static final int PORT = 5050;

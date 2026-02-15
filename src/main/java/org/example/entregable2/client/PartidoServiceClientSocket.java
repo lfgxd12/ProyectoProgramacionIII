@@ -8,9 +8,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Cliente socket para operaciones con partidos.
- */
+
 public class PartidoServiceClientSocket implements Closeable {
     private final Socket socket;
     private final BufferedReader in;
@@ -102,7 +100,6 @@ public class PartidoServiceClientSocket implements Closeable {
     }
 
     private PartidoDTO parse(String row) {
-        // Formato: id;jornada;localCodigo;visitanteCodigo;golesLocal;golesVisitante;estado
         String[] c = row.split(";", -1);
 
         PartidoDTO p = new PartidoDTO();

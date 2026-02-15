@@ -3,7 +3,6 @@ package org.example.entregable2.client;
 import java.io.InputStream;
 import java.util.Properties;
 
-// Configuración para conectar con el servidor
 public class SocketConfig {
 
     private static String host;

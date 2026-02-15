@@ -139,9 +139,6 @@ public class PartidoDatos {
         return new Date(d.getTime());
     }
 
-/*
-COSAS QUE PIDE EN EL ENTREGABLE 5 Y 6 Ojo
- */
 
     public List<PartidoDTO> listaPartidosPorJornada(int idTemporada, int jornada) {
 

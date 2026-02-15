@@ -79,7 +79,6 @@ public class ClientHandler implements Runnable {
     }
 
     private String serializarLista(List<EquipoDTO> equipos) {
-        // Cada equipo: id;nombre;ciudad;estadio;anio  y separados por ||
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < equipos.size(); i++) {
             EquipoDTO e = equipos.get(i);

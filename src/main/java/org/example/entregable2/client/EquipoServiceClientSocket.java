@@ -8,10 +8,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Cliente socket para operaciones CRUD de equipos.
- * Se conecta al servidor y envía comandos del protocolo definido.
- */
+
 public class EquipoServiceClientSocket implements Closeable {
     private final Socket socket;
     private final BufferedReader in;
@@ -113,7 +110,6 @@ public class EquipoServiceClientSocket implements Closeable {
     }
 
     private EquipoDTO parse(String row) {
-        // Formato: codigo;nombre;ciudad;estadio;anio;pj;g;e;p;gf;gc;dg;pts
         String[] c = row.split(";", -1);
 
         EquipoDTO e = new EquipoDTO();
@@ -123,7 +119,6 @@ public class EquipoServiceClientSocket implements Closeable {
         e.setEstadio(c[3]);
         e.setAnioFundacion(Integer.parseInt(c[4]));
 
-        // Si tiene estadísticas
         if (c.length > 5) {
             e.setPj(Integer.parseInt(c[5]));
             e.setG(Integer.parseInt(c[6]));

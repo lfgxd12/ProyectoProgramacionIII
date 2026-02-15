@@ -22,12 +22,10 @@ public class HelloApplication extends Application {
         Liga liga = new Liga("Premier League");
         PersistenciaService persistenciaService = PersistenciaService.getInstance();
 
-        // Cargar datos locales primero (para modo offline o fallback)
         try {
             if (persistenciaService.existenDatos()) {
                 Liga ligaLocal = persistenciaService.cargarLiga("Premier League");
                 System.out.println("Datos locales disponibles como respaldo");
-                // Copiar equipos locales a la liga actual por si el servidor falla
                 for (Equipo eq : ligaLocal.getEquipos()) {
                     liga.registrarEquipo(eq);
                 }
@@ -39,7 +37,6 @@ public class HelloApplication extends Application {
         NavigationService navigationService = NavigationService.getInstance();
         navigationService.initialize(stage, liga);
 
-        // Intentar sincronizar con el servidor en segundo plano
         final Liga ligaFinal = liga;
         Task<List<EquipoDTO>> cargarDesdeServidor = new Task<>() {
             @Override
@@ -54,14 +51,12 @@ public class HelloApplication extends Application {
                 List<EquipoDTO> equiposServidor = cargarDesdeServidor.getValue();
                 System.out.println("Equipos cargados desde el servidor: " + equiposServidor.size());
 
-                // Actualizar liga con datos del servidor
                 for (EquipoDTO dto : equiposServidor) {
                     try {
                         Equipo eq = new Equipo(dto.getNombre(), dto.getCiudad(), dto.getCodigo());
                         eq.setEstadio(dto.getEstadio());
                         eq.setAnnioFundacion(String.valueOf(dto.getAnioFundacion()));
 
-                        // Solo agregar si no existe ya
                         boolean existe = ligaFinal.getEquipos().stream()
                             .anyMatch(e -> e.getCodigo().equals(dto.getCodigo()));
 
@@ -83,7 +78,6 @@ public class HelloApplication extends Application {
             System.out.println("Equipos disponibles localmente: " + ligaFinal.getEquipos().size());
         });
 
-        // Ejecutar la carga en segundo plano
         new Thread(cargarDesdeServidor).start();
 
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("portada.fxml"));

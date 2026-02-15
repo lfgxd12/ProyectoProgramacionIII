@@ -9,10 +9,7 @@ import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-/**
- * Manejador de clientes conectados al servidor.
- * Procesa solicitudes del protocolo y ejecuta operaciones contra la base de datos.
- */
+
 public class ClientHandler implements Runnable {
     private final Socket socket;
     private final EquipoDatos equipoDao;
@@ -39,15 +36,15 @@ public class ClientHandler implements Runnable {
              BufferedWriter out = new BufferedWriter(
                 new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8))) {
 
-            System.out.println("✅ [" + clientInfo + "] Conexión establecida");
+            System.out.println(clientInfo + "] Conexión establecida");
 
             String req;
             while ((req = in.readLine()) != null) {
-                System.out.println("📩 [" + clientInfo + "] Solicitud: " + req);
+                System.out.println(clientInfo + "] Solicitud: " + req);
 
                 String res = procesar(req);
 
-                System.out.println("📤 [" + clientInfo + "] Respuesta: " +
+                System.out.println(clientInfo + "] Respuesta: " +
                     (res.length() > 100 ? res.substring(0, 100) + "..." : res));
 
                 out.write(res);
@@ -55,13 +52,13 @@ public class ClientHandler implements Runnable {
                 out.flush();
             }
         } catch (Exception e) {
-            System.err.println("⚠️ [" + clientInfo + "] Error: " + e.getMessage());
+            System.err.println(clientInfo + "] Error: " + e.getMessage());
         } finally {
             try {
                 socket.close();
-                System.out.println("🔌 [" + clientInfo + "] Desconectado");
+                System.out.println(clientInfo + "] Desconectado");
             } catch (IOException e) {
-                System.err.println("❌ Error cerrando socket: " + e.getMessage());
+                System.err.println("Error cerrando socket: " + e.getMessage());
             }
         }
     }
@@ -72,7 +69,6 @@ public class ClientHandler implements Runnable {
             String cmd = p[0].trim().toUpperCase();
 
             switch (cmd) {
-                // ========== COMANDOS DE EQUIPOS ==========
                 case "LIST":
                     return procesarListarEquipos();
 
@@ -88,7 +84,6 @@ public class ClientHandler implements Runnable {
                 case "DELETE":
                     return procesarEliminarEquipo(p[1]);
 
-                // ========== COMANDOS DE PARTIDOS ==========
                 case "PARTIDO_LIST":
                     return procesarListarPartidos();
 
@@ -101,18 +96,15 @@ public class ClientHandler implements Runnable {
                 case "PARTIDO_REGISTRAR":
                     return procesarRegistrarResultado(p);
 
-                // ========== COMANDOS DE CALENDARIO ==========
                 case "CALENDARIO_GENERAR":
                     return procesarGenerarCalendario(Boolean.parseBoolean(p[1]));
 
                 case "CALENDARIO_OBTENER":
                     return procesarObtenerCalendario();
 
-                // ========== COMANDOS DE TABLA DE POSICIONES ==========
                 case "TABLA_POSICIONES":
                     return procesarTablaPosiciones();
 
-                // ========== COMANDOS DE TEMPORADA ==========
                 case "TEMPORADA_ACTIVA":
                     return procesarObtenerTemporadaActiva();
 
@@ -131,7 +123,6 @@ public class ClientHandler implements Runnable {
         }
     }
 
-    // ========== PROCESADORES DE COMANDOS DE EQUIPOS ==========
 
     private String procesarListarEquipos() {
         List<EquipoDTO> equipos = equipoDao.listarActivos();
@@ -147,12 +138,10 @@ public class ClientHandler implements Runnable {
     }
 
     private String procesarCrearEquipo(String[] p) {
-        // CREATE|<codigo>|<nombre>|<ciudad>|<estadio>|<anio>
         if (p.length < 6) {
             return "ERR|Faltan parámetros para crear equipo";
         }
 
-        // Verificar si ya existe
         EquipoDTO existente = equipoDao.obtenerEquipoPorCodigo(p[1]);
         if (existente != null && !existente.isEliminado()) {
             return "ERR|Ya existe un equipo con el código: " + p[1];
@@ -171,7 +160,6 @@ public class ClientHandler implements Runnable {
     }
 
     private String procesarActualizarEquipo(String[] p) {
-        // UPDATE|<id>|<codigo>|<nombre>|<ciudad>|<estadio>|<anio>
         if (p.length < 7) {
             return "ERR|Faltan parámetros para actualizar equipo";
         }
@@ -198,12 +186,11 @@ public class ClientHandler implements Runnable {
         return ok ? "OK|Eliminado" : "ERR|No se pudo eliminar el equipo";
     }
 
-    // ========== PROCESADORES DE COMANDOS DE PARTIDOS ==========
 
     private String procesarListarPartidos() {
         TemporadaDTO temporada = temporadaDao.obtenerTemporadaActiva();
         if (temporada == null) {
-            return "OK|"; // Sin partidos si no hay temporada
+            return "OK|";
         }
 
         List<PartidoDTO> partidos = partidoDao.listaPartidosPorTemporada(temporada.getIdTemporada());
@@ -234,7 +221,6 @@ public class ClientHandler implements Runnable {
     }
 
     private String procesarRegistrarResultado(String[] p) {
-        // PARTIDO_REGISTRAR|<id>|<golesLocal>|<golesVisitante>
         if (p.length < 4) {
             return "ERR|Faltan parámetros para registrar resultado";
         }
@@ -256,7 +242,6 @@ public class ClientHandler implements Runnable {
         boolean ok = partidoDao.modificar(partido);
 
         if (ok) {
-            // Actualizar estadísticas de equipos
             actualizarEstadisticasEquipos(partido);
             return "OK|Resultado registrado";
         } else {
@@ -269,19 +254,16 @@ public class ClientHandler implements Runnable {
         EquipoDTO visitante = equipoDao.obtenerEquipoPorCodigo(partido.getEquipoVisitanteCodigo());
 
         if (local != null && visitante != null) {
-            // Actualizar local
             local.setPj(local.getPj() + 1);
             local.setGf(local.getGf() + partido.getGolesLocal());
             local.setGc(local.getGc() + partido.getGolesVisitante());
             local.setDg(local.getGf() - local.getGc());
 
-            // Actualizar visitante
             visitante.setPj(visitante.getPj() + 1);
             visitante.setGf(visitante.getGf() + partido.getGolesVisitante());
             visitante.setGc(visitante.getGc() + partido.getGolesLocal());
             visitante.setDg(visitante.getGf() - visitante.getGc());
 
-            // Determinar resultado
             if (partido.getGolesLocal() > partido.getGolesVisitante()) {
                 local.setG(local.getG() + 1);
                 local.setPts(local.getPts() + 3);
@@ -302,17 +284,14 @@ public class ClientHandler implements Runnable {
         }
     }
 
-    // ========== PROCESADORES DE COMANDOS DE CALENDARIO ==========
 
     private String procesarGenerarCalendario(boolean idaVuelta) {
         try {
-            // Cargar equipos activos
             List<EquipoDTO> equiposDTO = equipoDao.listarActivos();
             if (equiposDTO.size() < 2) {
                 return "ERR|Se necesitan al menos 2 equipos para generar el calendario";
             }
 
-            // Convertir DTO a entidades de lógica
             liga.limpiarEquipos();
             for (EquipoDTO dto : equiposDTO) {
                 Equipo eq = new Equipo(dto.getNombre(), dto.getCiudad(), dto.getCodigo());
@@ -321,10 +300,8 @@ public class ClientHandler implements Runnable {
                 liga.registrarEquipo(eq);
             }
 
-            // Generar calendario
             liga.generarCalendario(idaVuelta);
 
-            // Obtener o crear temporada activa
             TemporadaDTO temporada = temporadaDao.obtenerTemporadaActiva();
             if (temporada == null) {
                 temporada = new TemporadaDTO(0, "Premier League 2024-2025", 2024, 2025);
@@ -333,7 +310,6 @@ public class ClientHandler implements Runnable {
                 temporada.setIdTemporada(idTemp);
             }
 
-            // Guardar partidos en BD
             List<Partido> partidos = liga.getCalendario();
             int partidosGuardados = 0;
 
@@ -384,12 +360,10 @@ public class ClientHandler implements Runnable {
         return "OK|" + serializarListaPartidos(partidos);
     }
 
-    // ========== PROCESADORES DE TABLA DE POSICIONES ==========
 
     private String procesarTablaPosiciones() {
         List<EquipoDTO> equipos = equipoDao.listarActivos();
 
-        // Ordenar por puntos, diferencia de goles, goles a favor
         equipos.sort((e1, e2) -> {
             int cmpPts = Integer.compare(e2.getPts(), e1.getPts());
             if (cmpPts != 0) return cmpPts;
@@ -403,7 +377,6 @@ public class ClientHandler implements Runnable {
         return "OK|" + serializarTablaPosiciones(equipos);
     }
 
-    // ========== PROCESADORES DE TEMPORADA ==========
 
     private String procesarObtenerTemporadaActiva() {
         TemporadaDTO temporada = temporadaDao.obtenerTemporadaActiva();
@@ -414,7 +387,6 @@ public class ClientHandler implements Runnable {
     }
 
     private String procesarCrearTemporada(String[] p) {
-        // TEMPORADA_CREAR|<nombre>|<anioInicio>|<anioFin>
         if (p.length < 4) {
             return "ERR|Faltan parámetros para crear temporada";
         }
@@ -429,10 +401,8 @@ public class ClientHandler implements Runnable {
         return (id > 0) ? "OK|ID=" + id : "ERR|No se pudo crear la temporada";
     }
 
-    // ========== MÉTODOS DE SERIALIZACIÓN ==========
 
     private String serializarListaEquipos(List<EquipoDTO> equipos) {
-        // Formato: codigo;nombre;ciudad;estadio;anio separados por ||
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < equipos.size(); i++) {
             sb.append(serializarEquipo(equipos.get(i)));
@@ -442,7 +412,6 @@ public class ClientHandler implements Runnable {
     }
 
     private String serializarEquipo(EquipoDTO e) {
-        // Formato: codigo;nombre;ciudad;estadio;anio;pj;g;e;p;gf;gc;dg;pts
         return clean(e.getCodigo()) + ";" +
                clean(e.getNombre()) + ";" +
                clean(e.getCiudad()) + ";" +
@@ -468,7 +437,6 @@ public class ClientHandler implements Runnable {
     }
 
     private String serializarPartido(PartidoDTO p) {
-        // Formato: id;jornada;localCodigo;visitanteCodigo;golesLocal;golesVisitante;estado
         return p.getId() + ";" +
                p.getJornada() + ";" +
                clean(p.getEquipoLocalCodigo()) + ";" +
@@ -479,7 +447,6 @@ public class ClientHandler implements Runnable {
     }
 
     private String serializarTablaPosiciones(List<EquipoDTO> equipos) {
-        // Igual que lista de equipos, ya incluye las estadísticas
         return serializarListaEquipos(equipos);
     }
 

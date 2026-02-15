@@ -83,19 +83,16 @@ public class RegistrarEquipoController {
 
     @FXML
     public void onGuardarClick() {
-        // Validar antes de iniciar la tarea asíncrona
         if (!validarDatos()) {
             return;
         }
 
-        // Capturar valores de la UI en el hilo principal
         final String nombre = txtNombreEquipo.getText().trim();
         final String ciudad = txtCiudad.getText().trim();
         final String codigo = txtCodigo.getText().trim().toUpperCase();
         final String estadio = txtNombreEstadio.getText().trim();
         final int anioFundacion = Integer.parseInt(txtAnioFundacion.getText().trim());
 
-        // Crear DTO para enviar al servidor
         EquipoDTO dto = new EquipoDTO();
         dto.setCodigo(codigo);
         dto.setNombre(nombre);
@@ -103,10 +100,8 @@ public class RegistrarEquipoController {
         dto.setEstadio(estadio);
         dto.setAnioFundacion(anioFundacion);
 
-        // Deshabilitar botón durante la operación
         btnGuardar.setDisable(true);
 
-        // Crear tarea asíncrona para no bloquear la UI
         Task<Integer> task = new Task<>() {
             @Override
             protected Integer call() throws Exception {
@@ -115,11 +110,9 @@ public class RegistrarEquipoController {
             }
         };
 
-        // Manejar éxito
         task.setOnSucceeded(event -> {
             int idEquipo = task.getValue();
 
-            // Actualizar instancia local de Liga si existe
             if (liga != null) {
                 try {
                     Equipo equipoLocal = new Equipo(nombre, ciudad, codigo);
@@ -137,12 +130,10 @@ public class RegistrarEquipoController {
             btnGuardar.setDisable(false);
         });
 
-        // Manejar error
         task.setOnFailed(event -> {
             Throwable error = task.getException();
             String mensaje = error.getMessage();
 
-            // Mensajes amigables
             if (mensaje.contains("Ya existe")) {
                 mostrarAlerta(AlertType.WARNING, "Equipo Duplicado", mensaje);
             } else if (mensaje.contains("Sin respuesta")) {
@@ -156,7 +147,6 @@ public class RegistrarEquipoController {
             btnGuardar.setDisable(false);
         });
 
-        // Ejecutar tarea en un nuevo hilo
         new Thread(task).start();
     }
 
